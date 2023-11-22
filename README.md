@@ -1,4 +1,4 @@
-# name of non-profit
+# Five Cities Christian Women's Food Pantry
 
 {One sentence description of the project}
 
