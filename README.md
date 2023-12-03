@@ -20,12 +20,12 @@ At Five Cities Christian Women's Food Pantry, the organization addresses food in
 
 The Five Cities Christian Women's Food Pantry team consists of {#} Cal Poly students. Over the course of about 9 months, we worked as a team to deploy this web application. The team members are listed below:
 
-- [Stephen Carmona] (https://www.linkedin.com/) - Project Manager
-- [Kunhua Cheng] (https://www.linkedin.com/) - Designer
-- [Simmi Kaur] (https://www.linkedin.com/) - Designer
-- [Nayeli Rubalcava] (https://www.linkedin.com/) - Designer
-- [Priscilla Lam] (https://www.linkedin.com/) - Designer
-- [Hope Yim] (www.linkedin.com/in/hope-yim-78a037189) - Tech Lead
+- [Stephen Carmona](https://www.linkedin.com/) - Project Manager
+- [Kunhua Cheng](https://www.linkedin.com/) - Designer
+- [Simmi Kaur](https://www.linkedin.com/) - Designer
+- [Nayeli Rubalcava](https://www.linkedin.com/) - Designer
+- [Priscilla Lam](https://www.linkedin.com/) - Designer
+- [Hope Yim](www.linkedin.com/in/hope-yim-78a037189) - Tech Lead
 - [First Last](https://www.linkedin.com/) - Tech Lead
 - [First Last](https://www.linkedin.com/) - Software Developer
 
