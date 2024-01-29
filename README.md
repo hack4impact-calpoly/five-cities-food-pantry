@@ -28,7 +28,7 @@ The Five Cities Christian Women's Food Pantry team consists of {#} Cal Poly stud
 - [Lindsley Amaro](https://www.linkedin.com/) - Software Developer
 - [Sarah Sykora](https://www.linkedin.com/) - Software Developer
 - [Melika Dabiri](https://www.linkedin.com/in/melika-dabiri/) - Software Developer
-- [Aidan Nesbitt](https://www.linkedin.com/) - Software Developer
+- [Aidan Nesbitt](https://www.linkedin.com/aidannesbitt/) - Software Developer
 
 ## Getting Started And Contributing
 
