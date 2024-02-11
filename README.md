@@ -13,7 +13,7 @@ This project works alongside with the Five Cities Christian Women's Food Pantry 
 
 ### Purpose
 
-At Five Cities Christian Women's Food Pantry, the organization addresses food insecurities within neighborhoods and take actions to supply these needs. With the help of volunteers, donations of food come from a variety of locations such as grocery stores, generous individuals and families, schools, and congregational groups which then allows distribution into neighborhoods and families. With the help of our project manager, tech lead, designers, and developers, we aim to create a website application that allows the nonprofit to track their clients weekly to then create a monthly report.
+Five Cities Christian Women's Food Pantry is an organization that addresses food insecurities within neighborhoods and takes actions to supply these needs. With the help of volunteers, donations of food come from a variety of locations such as grocery stores, generous individuals and families, schools, and congregational groups which then allows distribution to neighborhoods and families. With the help of our project manager, tech lead, designers, and developers, we aim to create a website application that allows the nonprofit to track their clients weekly to then create a monthly report.
 
 ### Team
 
@@ -27,7 +27,11 @@ The Five Cities Christian Women's Food Pantry team consists of {#} Cal Poly stud
 - [Hope Yim](www.linkedin.com/in/hope-yim-78a037189) - Tech Lead
 - [Lindsey Amaro](https://www.linkedin.com/in/lindsey-amaro/) - Software Developer
 - [Sarah Sykora](https://www.linkedin.com/) - Software Developer
-- [Aidan Nesbitt](https://www.linkedin.com/) - Software Developer
+- [Melika Dabiri](https://www.linkedin.com/in/melika-dabiri/) - Software Developer
+- [Aidan Nesbitt](https://www.linkedin.com/in/aidannesbitt/) - Software Developer
+- [Arya Ramchander](https://www.linkedin.com/in/aryaramchander/) - Software Developer
+
+
 
 ## Getting Started And Contributing
 
