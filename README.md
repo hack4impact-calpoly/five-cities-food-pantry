@@ -26,7 +26,7 @@ The Five Cities Christian Women's Food Pantry team consists of {#} Cal Poly stud
 - [Priscilla Lam](https://www.linkedin.com/) - Designer
 - [Hope Yim](www.linkedin.com/in/hope-yim-78a037189) - Tech Lead
 - [Lindsey Amaro](https://www.linkedin.com/in/lindsey-amaro/) - Software Developer
-- [Sarah Sykora](https://www.linkedin.com/) - Software Developer
+- [Sarah Sykora]((https://www.linkedin.com/in/sarahsykora/)) - Software Developer
 - [Melika Dabiri](https://www.linkedin.com/in/melika-dabiri/) - Software Developer
 - [Aidan Nesbitt](https://www.linkedin.com/in/aidannesbitt/) - Software Developer
 - [Arya Ramchander](https://www.linkedin.com/in/aryaramchander/) - Software Developer
