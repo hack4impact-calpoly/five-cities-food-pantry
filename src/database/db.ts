@@ -10,15 +10,9 @@ let connection: typeof mongoose;
  */
 const connectDB = async () => {
   if (!connection) {
-    try {
-      connection = await mongoose.connect(url);
-      console.log("Connected to database!");
-    } catch (error) {
-      console.error("Database connection error:", error);
-      throw error; // Re-throw the error to handle it in the calling function
-    }
+    connection = await mongoose.connect(url);
+    return connection;
   }
-  return connection;
 };
 
 export default connectDB;
