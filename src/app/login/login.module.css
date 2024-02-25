@@ -1,0 +1,94 @@
+.infoFormContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.infoForm {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.inputBar {
+  flex: 1;
+
+  margin-bottom: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 60px;
+  padding-right: 60px;
+
+  background-color: white;
+  border-width: 1px;
+  border-color: rgb(94, 161, 94);
+  border-radius: 3%;
+}
+
+.inputLabel {
+  display: block;
+  text-align: left;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+.forgotPassLink {
+  margin-top: -15px;
+  margin-bottom: 15px;
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  text-align: right;
+}
+
+.loginForm {
+  position: relative;
+  text-align: center;
+  display: block;
+  margin: 15px;
+}
+
+.loginButton {
+  vertical-align: middle;
+  background-color: rgb(83, 91, 79);
+  color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 52px;
+  padding-right: 52px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 0px;
+  border-radius: 3%;
+}
+
+.loginButton:hover {
+  background-color: rgb(133, 147, 127);
+  cursor: pointer;
+}
+
+.loginButton:active {
+  background-color: rgb(66, 72, 63);
+}
+
+.loginContainer {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.logo {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.logoImage {
+  width: auto;
+  height: auto;
+}
+
+.signUpLink {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
