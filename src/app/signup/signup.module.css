@@ -22,7 +22,8 @@
 }
 
 .signupTitle {
-  font-size: 42px;
+  margin-top: 20px;
+  font-size: 40px;
 }
 .nameInput {
   display: flex;
@@ -41,16 +42,21 @@
   margin-top: 5px;
   padding-bottom: 15px;
   padding-top: 15px;
-  padding-left: 10px;
-
+  padding-left: 15px;
+  padding-right: 15px;
+  font-family: "Interstate", sans-serif;
   background-color: white;
   border-width: 1.5px;
   border-color: #656d4a;
   border-radius: 3%;
 }
 
+.entryInput:focus {
+  background-color: #f8f6ef;
+  outline: 1.5px solid #656d4a;
+}
+
 .buttonContainer {
-  margin-top: 10px;
   margin-bottom: 15px;
   text-align: center;
 }
