@@ -36,4 +36,3 @@ export async function GET(req: NextRequest, { params }: IParams) {
       { status: 500 }
     );
   }
-}
