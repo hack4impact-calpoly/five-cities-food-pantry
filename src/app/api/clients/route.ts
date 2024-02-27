@@ -29,3 +29,28 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
+export async function POST(req: NextRequest) {
+  await connectDB();
+
+  try {
+    const newClientData = await req.json();
+
+    //create a new client using the data in body
+    const newClient = new IClientSchema(newClientData);
+    console.log(newClient);
+
+    //save the new client to the database
+    await newClient.save();
+    return NextResponse.json({ message: 'Operation successful' }, { status: 200 });
+  }
+  //if unable to add client, return error
+  catch(err) {
+    console.log("Error adding client:", err);
+    return NextResponse.json(
+      { error: "Error adding client." },
+      { status: 500}
+    );
+  }
+}
+

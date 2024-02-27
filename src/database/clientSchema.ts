@@ -60,3 +60,4 @@ interface iClient extends Document {
 
 export default mongoose.models.Client ||
   mongoose.model<iClient>("Client", ClientSchema, "client");
+

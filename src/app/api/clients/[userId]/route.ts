@@ -37,3 +37,24 @@ export async function GET(req: NextRequest, { params }: IParams) {
     );
   }
 }
+
+export async function DELETE(req: NextRequest, { params }: IParams) {
+  await connectDB();
+  const { userId } = params;
+  
+  try {
+    //find the client to delete by the given id
+    const client = await IClientSchema.findOne({ _id: userId });
+    await IClientSchema.findByIdAndDelete(client._id); 
+    return NextResponse.json({ message: 'Operation successful' }, { status: 200 });
+  }
+  //return an error if unable to delete the client
+  catch(err) {
+    console.error("Error deleting client:", err);
+    return NextResponse.json(
+      { error: "Error deleting client." },
+      { status: 500}
+    );
+  }
+}
+
