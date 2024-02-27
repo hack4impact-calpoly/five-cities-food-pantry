@@ -18,11 +18,16 @@
   padding-bottom: 15px;
   padding-left: 60px;
   padding-right: 60px;
-
+  font-family: "Interstate", sans-serif;
   background-color: white;
   border-width: 1px;
   border-color: rgb(94, 161, 94);
   border-radius: 3%;
+}
+
+.inputBar:focus {
+  background-color: #f8f6ef;
+  outline: 1.5px solid #656d4a;
 }
 
 .inputLabel {
@@ -51,7 +56,7 @@
 
 .loginButton {
   vertical-align: middle;
-  background-color: #656D4A;
+  background-color: #656d4a;
   color: white;
   padding-top: 15px;
   padding-bottom: 15px;
