@@ -10,7 +10,7 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
-    "mongoose": "^7.6.3",
+    "mongoose": "^7.6.9",
     "next": "14.0.0",
     "react": "^18",
     "react-dom": "^18"
