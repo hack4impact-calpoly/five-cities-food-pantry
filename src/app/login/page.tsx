@@ -28,8 +28,8 @@ export default function Login() {
           src="/logo.png"
           alt=""
           priority={true}
-          width={380}
-          height={380}
+          width={255}
+          height={255}
         />
       </div>
 
