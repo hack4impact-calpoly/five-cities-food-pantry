@@ -70,7 +70,7 @@ export default function Login() {
           Login
         </button>
         <p className={style.signUpLink}>
-          New user? <Link href="">Sign up here</Link>
+          New user? <Link href="/signup">Sign up here</Link>
         </p>
       </div>
     </>
