@@ -16,7 +16,7 @@ const Navbar = () => {
           <a href="/clientSearch" className="navbar-link">
             Client Search
           </a>
-          <a href="/generatePDF" className="navbar-link">
+          <a href="/report" className="navbar-link">
             Generate PDF
           </a>
           <div className="profile-icon">

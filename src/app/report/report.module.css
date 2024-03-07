@@ -1,0 +1,42 @@
+.reportPage {
+    font-family: "Interstate", sans-serif;
+    background-color: white;
+    padding: 10px;
+    margin-top: 50px;
+    margin-left: 200px;
+}
+
+.header {
+    background-color: white;
+    padding-bottom: 10px;
+}
+
+.subheader {
+    color: rgb(94, 161, 94);
+}
+
+.dateEntry {
+    display:flex;
+    flex-direction: row;
+    justify-content: left; 
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.dateItem {
+    height: 30px;
+    width: 35%;
+    margin-right: 20px;
+    border-color: rgb(94, 161, 94);
+    border-width: 0.5px;
+    font-family: "Interstate", sans-serif;
+}
+
+.createButton {
+    margin-top: 10px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgb(94, 161, 94);
+    color: white;
+}
