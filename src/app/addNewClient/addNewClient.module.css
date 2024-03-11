@@ -1,0 +1,71 @@
+.header {
+    font-family: "Avenir";
+    color: #000000;
+  }
+  
+  .subheader {
+    font-family: "Avenir";
+    color: rgb(103, 109, 78)
+  }
+
+  .insideSubheader {
+    font-family: "Avenir";
+    color: black
+  }
+
+  /* for boxes to appear side by side */
+  .inputGroup {
+    display: inline-block;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+
+  /* entire input field with labels and input box */
+  .inputContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .inputBar {
+    flex: 1;
+  
+    margin-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 60px;
+    padding-right: 60px;
+    font-family: "Avenir", sans-serif;
+    background-color: white;
+    border-width: 1px;
+    border-color: rgb(94, 161, 94);
+    border-radius: 3%;
+  }
+
+  .inputLabel {
+    display: block;
+    text-align: left;
+    margin-bottom: 3px;
+    font-size: 15px;
+    font-family: "Avenir", sans-serif;
+  }
+
+  .radioButton {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+  }
+
+  .radioLabel {
+    font-family: "Avenir", sans-serif;
+    color: black;
+  }
+  
+  .addButton {
+    border: 2px;
+    color: white;
+    border-radius: 3px;
+    font-family: "Avenir", sans-serif;
+    background: rgb(103, 109, 78);
+    width: 8em;
+    height: 3em;
+  }
