@@ -1,5 +1,5 @@
 .reportPage {
-    font-family: "Interstate", sans-serif;
+    font-family: "Avenir", sans-serif;
     background-color: white;
     padding: 10px;
     margin-top: 50px;
@@ -27,9 +27,9 @@
     height: 30px;
     width: 35%;
     margin-right: 20px;
-    border-color: rgb(94, 161, 94);
+    border-color: rgb(103, 109, 78);
     border-width: 0.5px;
-    font-family: "Interstate", sans-serif;
+    font-family: "Avenir", sans-serif;
 }
 
 .createButton {
@@ -37,6 +37,6 @@
     padding: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: rgb(94, 161, 94);
+    background-color: rgb(103, 109, 78);
     color: white;
 }
