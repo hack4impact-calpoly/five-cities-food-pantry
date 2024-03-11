@@ -11,7 +11,7 @@
 .signupContainer {
   display: flex;
   flex-direction: row;
-  font-family: "Interstate";
+  font-family: "Avenir";
 }
 
 .signupForm {
@@ -44,7 +44,7 @@
   padding-top: 15px;
   padding-left: 15px;
   padding-right: 15px;
-  font-family: "Interstate", sans-serif;
+  font-family: "Avenir", sans-serif;
   background-color: white;
   border-width: 1.5px;
   border-color: #656d4a;
@@ -68,7 +68,7 @@
   padding-bottom: 15px;
   padding-left: 52px;
   padding-right: 52px;
-  font-family: "Interstate", sans-serif;
+  font-family: "Avenir", sans-serif;
   font-size: 16px;
   margin-bottom: 20px;
   border: 0px;
