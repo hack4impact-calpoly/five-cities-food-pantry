@@ -1,0 +1,85 @@
+.logo {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.logoImage {
+  width: auto;
+  height: auto;
+}
+
+.signupContainer {
+  display: flex;
+  flex-direction: row;
+  font-family: "Interstate";
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  flex: 1.5;
+  font-size: 15px;
+}
+
+.signupTitle {
+  margin-top: 20px;
+  font-size: 40px;
+}
+.nameInput {
+  display: flex;
+  flex-direction: row;
+}
+
+.firstNameInput,
+.lastNameInput {
+  display: flex;
+  flex-direction: column;
+  flex: 15;
+}
+.entryInput {
+  flex: 1;
+  margin-bottom: 30px;
+  margin-top: 5px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-family: "Interstate", sans-serif;
+  background-color: white;
+  border-width: 1.5px;
+  border-color: #656d4a;
+  border-radius: 3%;
+}
+
+.entryInput:focus {
+  background-color: #f8f6ef;
+  outline: 1.5px solid #656d4a;
+}
+
+.buttonContainer {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.signupButton {
+  background-color: #656d4a;
+  color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 52px;
+  padding-right: 52px;
+  font-family: "Interstate", sans-serif;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 0px;
+  border-radius: 3%;
+}
+
+.signupButton:hover {
+  background-color: rgb(133, 147, 127);
+  cursor: pointer;
+}
+
+.signupButton:active {
+  background-color: rgb(66, 72, 63);
+}

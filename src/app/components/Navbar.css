@@ -1,0 +1,65 @@
+/* the green border bottom currently doesn't extend to the edges of the page, this can be fixed later */
+.navbar {
+  font-family: "Interstate", sans-serif;
+  font-weight: 300;
+  padding: 1.3rem;
+  height: 4.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /*below lines create the fading bottom border effect for the navbar */
+  border-bottom: 2px solid transparent; /* Set initial border to transparent */
+  background-image: linear-gradient(
+    to bottom,
+    rgba(250, 230, 195, 1),
+    rgba(250, 230, 195, 0.2)
+  ); /* Apply linear gradient as background image */
+  background-position: 0 100%; /* Position the gradient at the bottom */
+  background-size: 100% 2px; /* Set the size of the gradient */
+  background-repeat: no-repeat; /* Ensure the gradient does not repeat */
+}
+
+.navbar-container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* right part of nav bar that holds the client search, generate pdf, and profile links*/
+.navbar-right-links {
+  display: flex;
+  align-items: center;
+  margin-right: 5em;
+  justify-content: space-between;
+  width: 30em;
+  height: 100%;
+}
+
+/* an individual link div */
+.navbar-link {
+  text-decoration: none;
+  color: rgb(103, 109, 78);
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+/* logo to left of navbar */
+.logo {
+  width: 6.5em;
+}
+
+/* pfp icon */
+.icon {
+  width: 2.35em;
+}
+
+a.navbar-link {
+  font-size: 1.35em;
+}
+
+.navbar-link .logo {
+  font-size: 1rem;
+}

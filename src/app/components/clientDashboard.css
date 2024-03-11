@@ -1,0 +1,167 @@
+.client-profile {
+  font-family: "Interstate", sans-serif;
+  color: rgb(103, 109, 78);
+  width: 70%;
+  margin: 5em auto;
+  background: #fff;
+}
+
+h1,
+p {
+  color: #524242;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 0.4em;
+}
+
+button.back-button {
+  background: #fff;
+  color: rgb(103, 109, 78);
+  border: 0;
+  font-size: 1.25em;
+  margin-bottom: 1em;
+}
+
+.client-name {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.client-info {
+  margin-bottom: 5em;
+}
+
+.details-content-members {
+  margin-bottom: 1em;
+}
+
+.details-authorized-pickup {
+  margin-bottom: 0.75em;
+  background: green;
+}
+
+.client-details {
+  justify-content: space-between;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.details-household-members {
+  width: 30%;
+}
+
+h3 {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: 300;
+  margin-bottom: 0.5em;
+}
+
+.details-phone-number {
+  width: 20%;
+  margin-right: 5em;
+}
+
+.details-address {
+  width: 38%;
+}
+
+.details-age {
+  width: 12%;
+  background: blue;
+}
+
+/* Client Dashboard Table Stylings */
+
+.client-information {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-header,
+.table-row,
+.table-header-pickup {
+  display: flex;
+}
+
+.table-header-pickup {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.members {
+  width: 30%;
+}
+
+.age {
+  width: 12%;
+}
+
+.phone-number {
+  width: 25%;
+}
+
+.address {
+  width: 35%;
+}
+
+button.check-in {
+  border: 1.5px solid rgb(103, 109, 78);
+  color: rgb(103, 109, 78);
+  border-radius: 3px;
+  width: 8em;
+  font-size: 1.35em;
+  height: 2.25em;
+  background: #fff;
+}
+
+.name-and-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.client-history,
+.client-notes {
+  border: 1px solid rgb(103, 109, 78);
+  width: 47%;
+  padding: 0.5em;
+}
+
+.visit-date {
+  margin-bottom: 0.75em;
+}
+
+.notes-content li {
+  margin-left: -1em;
+  padding: 0;
+}
+.history-and-notes-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
+.icon {
+  width: 1.8em;
+  height: 1.8em;
+  margin-left: 1em;
+}
+
+.name-and-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.client-name {
+  font-size: 2.1em;
+  font-weight: 400;
+}
+
+.bolded {
+  font-weight: 600;
+}
