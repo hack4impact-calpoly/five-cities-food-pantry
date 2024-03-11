@@ -28,8 +28,8 @@ export default function Login() {
           src="/logo.png"
           alt=""
           priority={true}
-          width={380}
-          height={380}
+          width={255}
+          height={255}
         />
       </div>
 
@@ -70,7 +70,7 @@ export default function Login() {
           Login
         </button>
         <p className={style.signUpLink}>
-          New user? <Link href="">Sign up here</Link>
+          New user? <Link href="/signup">Sign up here</Link>
         </p>
       </div>
     </>
