@@ -7,7 +7,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  font-family: "Interstate";
+  font-family: "Avenir";
 }
 
 .inputBar {
@@ -18,7 +18,7 @@
   padding-bottom: 15px;
   padding-left: 60px;
   padding-right: 60px;
-  font-family: "Interstate", sans-serif;
+  font-family: "Avenir", sans-serif;
   background-color: white;
   border-width: 1px;
   border-color: rgb(94, 161, 94);
@@ -35,14 +35,14 @@
   text-align: left;
   margin-bottom: 3px;
   font-size: 15px;
-  font-family: "Interstate", sans-serif;
+  font-family: "Avenir", sans-serif;
 }
 
 .forgotPassLink {
   margin-top: -15px;
   margin-bottom: 15px;
 
-  font-family: "Interstate", sans-serif;
+  font-family: "Avenir", sans-serif;
   font-size: 14px;
   text-align: right;
 }
@@ -62,7 +62,7 @@
   padding-bottom: 15px;
   padding-left: 52px;
   padding-right: 52px;
-  font-family: "Interstate", sans-serif;
+  font-family: "Avenir", sans-serif;
   font-size: 16px;
   margin-bottom: 20px;
   border: 0px;
@@ -96,6 +96,6 @@
 }
 
 .signUpLink {
-  font-family: "Interstate", sans-serif;
+  font-family: "Avenir", sans-serif;
   font-size: 20px;
 }
