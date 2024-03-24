@@ -1,11 +1,20 @@
 import mongoose, { Schema } from "mongoose";
-// ^ updated this to be an import, not requires mongoose
 
 //should this follow an interface?
+interface iEmployee extends Document {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
 
 //added new keyword
-const EmployeeSchema = new mongoose.Schema({
-  username: {
+const EmployeeSchema = new Schema<iEmployee>({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
     type: String,
     required: true,
   },
