@@ -1,20 +1,28 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 interface iClient extends Document {
-  name: string;
-  age: number;
+  firstName: string;
+  lastName: string;
+  birthDate: number;
   entryDates: Date[];
   phoneNumber: string;
   email: string;
   address: string;
+  authMem: Types.ObjectId[];
+  householdMem: Types.ObjectId[];
+  isFlagged: boolean;
 }
 
- const ClientSchema = new Schema<iClient>({
-  name: {
+const ClientSchema = new Schema<iClient>({
+  firstName: {
     type: String,
     required: true,
   },
-  age: {
+  lastName: {
+    type: String,
+    required: true,
+  },
+  birthDate: {
     type: Number,
     required: true,
     min: 0,
@@ -55,9 +63,24 @@ interface iClient extends Document {
     required: true,
     // validation ?
   },
+  authMem: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "AuthorizedMember", // references the AuthorizedMember model (that's exported within the AuthorizedMember file)
+    },
+  ],
+  householdMem: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "HouseholdMember", // references the AuthorizedMember model (that's exported within the householdMember file)
+    },
+  ],
+  isFlagged: {
+    type: Boolean,
+    required: true,
+  },
   // family_unit: TBA
 });
 
 export default mongoose.models.Client ||
   mongoose.model<iClient>("Client", ClientSchema, "client");
-
