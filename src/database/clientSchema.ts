@@ -3,7 +3,7 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 interface iClient extends Document {
   firstName: string;
   lastName: string;
-  birthDate: number;
+  birthDate: Date;
   entryDates: Date[];
   phoneNumber: string;
   email: string;
@@ -23,7 +23,7 @@ const ClientSchema = new Schema<iClient>({
     required: true,
   },
   birthDate: {
-    type: Number,
+    type: Date,
     required: true,
     min: 0,
     max: 120,
