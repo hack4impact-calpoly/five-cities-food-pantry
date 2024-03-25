@@ -93,7 +93,7 @@ const ClientSchema = new Schema<iClient>({
   householdMem: [
     {
       type: Schema.Types.ObjectId,
-      ref: "HouseholdMember", // references the AuthorizedMember model (that's exported within the householdMember file)
+      ref: "Client", // references the AuthorizedMember model (that's exported within the householdMember file)
     },
   ],
   isFlagged: {
