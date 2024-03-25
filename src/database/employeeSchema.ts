@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-//should this follow an interface?
 interface iEmployee extends Document {
   firstName: string;
   lastName: string;
@@ -8,7 +7,6 @@ interface iEmployee extends Document {
   password: string;
 }
 
-//added new keyword
 const EmployeeSchema = new Schema<iEmployee>({
   firstName: {
     type: String,
@@ -29,7 +27,7 @@ const EmployeeSchema = new Schema<iEmployee>({
   },
 });
 
-//added third argument so that it finds the "employee" collection
+//third argument finds the "employee" collection
 //changed to mongoose.models.Employee to fix "cannot overwrite 'Employee model once compiled" when attempting to get individual employee
 export default mongoose.models.Employee ||
   mongoose.model("Employee", EmployeeSchema, "employee");
