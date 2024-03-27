@@ -1,11 +1,18 @@
-import mongoose, { Schema } from "mongoose";
-// ^ updated this to be an import, not requires mongoose
+import mongoose, { Schema, Document } from "mongoose";
 
-//should this follow an interface?
+interface iEmployee extends Document {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
 
-//added new keyword
-const EmployeeSchema = new mongoose.Schema({
-  username: {
+const EmployeeSchema = new Schema<iEmployee>({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
     type: String,
     required: true,
   },
@@ -20,7 +27,7 @@ const EmployeeSchema = new mongoose.Schema({
   },
 });
 
-//added third argument so that it finds the "employee" collection
+//third argument finds the "employee" collection
 //changed to mongoose.models.Employee to fix "cannot overwrite 'Employee model once compiled" when attempting to get individual employee
 export default mongoose.models.Employee ||
   mongoose.model("Employee", EmployeeSchema, "employee");
