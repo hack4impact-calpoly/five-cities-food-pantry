@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
 
-interface IHouseholdMember {
+interface IHouseholdMember extends Document {
     firstName: string;
     lastName: string;
     birthDate: Date;
