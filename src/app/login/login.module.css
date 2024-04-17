@@ -1,6 +1,8 @@
 .infoFormContainer {
   display: flex;
-  flex-direction: row;
+  width: 25%;
+  margin: auto;
+  flex-direction: column;
 }
 
 .infoForm {
@@ -98,4 +100,8 @@
 .signUpLink {
   font-family: "Avenir", sans-serif;
   font-size: 20px;
+}
+
+.errorMessage {
+  color: red;
 }

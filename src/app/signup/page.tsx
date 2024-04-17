@@ -24,8 +24,24 @@ export default function Signup() {
   };
 
   const handleSubmit = () => {
+    // ! Eventually remove console logs
     console.log(firstname + " " + lastname);
     console.log(email + " " + password);
+
+    // Todo: validate inputs
+
+    // Todo: if valid
+      
+      // check if email exists in db
+
+        // * if exists: prompt user to login instead
+
+        // * if doesn't exist:
+
+          // add login information to the db as a user document
+          // redirect to login confirmation page
+
+    // Todo: if not valid, prompt user to fix 
   };
 
   return (
