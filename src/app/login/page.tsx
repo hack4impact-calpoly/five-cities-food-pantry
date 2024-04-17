@@ -9,7 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [loginErrorMessage, setLoginErrorMessage] = useState(Boolean);
   const [password, setPassword] = useState("");
-  const router = useRouter(); // Initialize the useRouter hook
+  const router = useRouter(); // router initialization to be able to redirect user to clientPage on successful login
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -19,21 +19,17 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
+  // runs when the user submits the form
   const handleSubmit = () => {
-    // ! Eventually Remove this console log
-    console.log(email + " " + password);
-
     // check if inputs follow valid email and password formatting. if valid, continue with login process
-    if (validateInputs()) {
+    if (validateEmailAndPassword()) {
       console.log("inputs valid, now checking db");
-      checkDB();
+      checkCredentialsInDB();
     }
-
-    // Todo: if not valid, prompt user to fix
   };
 
-  // inputs are valid if not empty, if email follows email formatting, if password is more than 6 characters
-  const validateInputs = (): boolean => {
+  // inputs are valid if not empty & if email follows email formatting & if password is more than 6 characters
+  const validateEmailAndPassword = (): boolean => {
     console.log("Login Page: validating inputs for formatting.");
 
     //check if email valid
@@ -63,8 +59,7 @@ export default function Login() {
 
   // * this function is only called if the inputs are validated and a properly formatted email/password are inputted by the user
   // ! should this specifically tell the user if the email doesn't exist in the db or if the password doesn't exist? or just provide a general error message
-  // ! would that require making two requests? 1 with the email to check and 1 with the password if the email one came back successfuL?
-  const checkDB = async () => {
+  const checkCredentialsInDB = async () => {
     // make POST request to api route, passing email and password to be able to check db
 
     try {
@@ -80,10 +75,10 @@ export default function Login() {
 
       if (response.ok) {
         // * successful login, navigate to home page and display success message
-        router.push("/clientPage"); //navigates user to this path, also need to pass profile object?
+        router.push("/clientPage"); // navigates user to this path, also need to pass profile object?
         console.log("Success:", data);
       } else {
-        // * means the password did not match, or the email did not exist
+        // * means the password did not match, or the email did not exist, show error message
         console.log("Failure:", data.message);
         setLoginErrorMessage(true);
       }
