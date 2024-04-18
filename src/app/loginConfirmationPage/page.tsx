@@ -10,7 +10,7 @@ export default function LoginConfirmationPage() {
 
   // runs when the user submits the form
   const handleSubmit = () => {
-    router.push("/clientPage"); // redirects to the login page
+    router.push("/login"); // redirects to the login page
   };
 
   return (
