@@ -30,19 +30,10 @@ export default function Signup() {
   };
 
   const handleSubmit = () => {
-    // ! Eventually remove console logs
-    console.log(firstname + " " + lastname);
-    console.log(email + " " + password);
-
     // if names not blank, email and password follow correct formatting
     if (validateNamesAndEmailAndPassword()) {
-      console.log(
-        "inputs valid, now checking db to ensure this account does not exist."
-      );
       checkDatabaseAndCreateAccount();
     }
-
-    // Todo: if not valid, prompt user to fix
   };
 
   const checkDatabaseAndCreateAccount = async () => {
@@ -63,11 +54,9 @@ export default function Signup() {
       // if account does exist, prompt user to login page instead
       if (response.ok) {
         // * account does not exist, adds user document to DB, redirect to login screen
-        console.log("Account doesn't exist, creating account.");
         router.push("/loginConfirmationPage"); // navigates user to this path, also need to pass profile object?
       } else {
         // * account does exist, redirect user to login
-        console.log("Account Exists Already, Please login.");
         setAccountExistsMessage(true); // prompts user to login instead
       }
     } catch (error) {
@@ -77,11 +66,8 @@ export default function Signup() {
 
   // inputs are valid if not empty & if email follows email formatting & if password is more than 6 characters
   const validateNamesAndEmailAndPassword = (): boolean => {
-    console.log("Login Page: validating inputs for formatting.");
-
     // check if first name && last name are not empty
     if (firstname.length == 0 || lastname.length == 0) {
-      console.log("First and Last names must be at least 1 character");
       setErrorMessageContent(
         "First and last names must be at least 1 character."
       );
@@ -92,8 +78,6 @@ export default function Signup() {
     //check if email valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      console.log("Invalid email format.");
-
       setErrorMessageContent(
         "Please ensure your email follows standard format."
       );
@@ -104,9 +88,6 @@ export default function Signup() {
     //check if password valid
     const passwordRegex = /^[A-Za-z0-9!@#$%^&*()_+=-]{6,}$/;
     if (!passwordRegex.test(password)) {
-      console.log(
-        "Password must be at least 6 characters long and contain only allowed characters."
-      );
       setErrorMessageContent(
         "Password must be at least 6 characters long and contain only allowed characters."
       );

@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation"; // used for navigating the user to 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [loginErrorMessage, setLoginErrorMessage] = useState(Boolean);
+  const [errorMessageContent, setErrorMessageContent] = useState("");
+
   const [password, setPassword] = useState("");
   const router = useRouter(); // router initialization to be able to redirect user to clientPage on successful login
 
@@ -23,20 +25,18 @@ export default function Login() {
   const handleSubmit = () => {
     // check if inputs follow valid email and password formatting. if valid, continue with login process
     if (validateEmailAndPassword()) {
-      console.log("inputs valid, now checking db");
       checkCredentialsInDB();
     }
   };
 
   // inputs are valid if not empty & if email follows email formatting & if password is more than 6 characters
   const validateEmailAndPassword = (): boolean => {
-    console.log("Login Page: validating inputs for formatting.");
-
     //check if email valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      console.log("Invalid email format.");
-
+      setErrorMessageContent(
+        "Please ensure your email follows standard format."
+      );
       setLoginErrorMessage(true); // display error message
       return false;
     }
@@ -44,10 +44,9 @@ export default function Login() {
     //check if password valid
     const passwordRegex = /^[A-Za-z0-9!@#$%^&*()_+=-]{6,}$/;
     if (!passwordRegex.test(password)) {
-      console.log(
+      setErrorMessageContent(
         "Password must be at least 6 characters long and contain only allowed characters."
       );
-
       setLoginErrorMessage(true); // display error message
       return false;
     }
@@ -76,10 +75,11 @@ export default function Login() {
       if (response.ok) {
         // * successful login, navigate to home page and display success message
         router.push("/clientPage"); // navigates user to this path, also need to pass profile object?
-        console.log("Success:", data);
       } else {
         // * means the password did not match, or the email did not exist, show error message
-        console.log("Failure:", data.message);
+        setErrorMessageContent(
+          "There was an error with your login credentials, please try again."
+        );
         setLoginErrorMessage(true);
       }
     } catch (error) {
@@ -104,7 +104,7 @@ export default function Login() {
         <div style={{ flex: 1.7 }}></div>
         {loginErrorMessage && (
           <div className={style.errorMessage}>
-            <p>There is an issue with the email or password you entered.</p>
+            <p>{errorMessageContent}</p>
           </div>
         )}
         <form className={style.infoForm}>
