@@ -11,6 +11,7 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signupErrorMessage, setSignupErrorMessage] = useState(Boolean);
+  const [errorMessageContent, setErrorMessageContent] = useState("");
   const [accountExistsMessage, setAccountExistsMessage] = useState(Boolean);
   const router = useRouter(); // router initialization to be able to redirect user to clientPage on successful login
 
@@ -78,11 +79,24 @@ export default function Signup() {
   const validateNamesAndEmailAndPassword = (): boolean => {
     console.log("Login Page: validating inputs for formatting.");
 
+    // check if first name && last name are not empty
+    if (firstname.length == 0 || lastname.length == 0) {
+      console.log("First and Last names must be at least 1 character");
+      setErrorMessageContent(
+        "First and last names must be at least 1 character."
+      );
+      setSignupErrorMessage(true); //display error message
+      return false;
+    }
+
     //check if email valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       console.log("Invalid email format.");
 
+      setErrorMessageContent(
+        "Please ensure your email follows standard format."
+      );
       setSignupErrorMessage(true); // display error message
       return false;
     }
@@ -93,15 +107,10 @@ export default function Signup() {
       console.log(
         "Password must be at least 6 characters long and contain only allowed characters."
       );
-
+      setErrorMessageContent(
+        "Password must be at least 6 characters long and contain only allowed characters."
+      );
       setSignupErrorMessage(true); // display error message
-      return false;
-    }
-
-    // check if first name && last name are not empty
-    if (firstname.length == 0 || lastname.length == 0) {
-      console.log("First and Last names must be at least 1 character");
-      setSignupErrorMessage(true); //display error message
       return false;
     }
 
@@ -127,7 +136,7 @@ export default function Signup() {
         <div style={{ flex: 1 }}></div>
         {signupErrorMessage ? (
           <div className={style.errorMessage}>
-            <p>There is an issue login information you entered.</p>
+            <p>{errorMessageContent}</p>
           </div>
         ) : (
           <div className={style.errorMessage}></div>
