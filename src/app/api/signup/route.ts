@@ -29,17 +29,6 @@ export async function POST(req: NextRequest) {
       req
     )) as SignupRequestBody;
 
-    console.log(
-      "inputted: email ",
-      email,
-      " password: ",
-      password,
-      " firstname: ",
-      firstname,
-      " lastname: ",
-      lastname
-    );
-
     // Attempting to find user associated with inputted email
     const user = await IUserSchema.findOne({ email: email });
 
@@ -53,8 +42,6 @@ export async function POST(req: NextRequest) {
         firstname: firstname,
         lastname: lastname,
       });
-
-      console.log("NEW USER: ", newUser);
 
       return NextResponse.json(
         { message: "User successfully created." },

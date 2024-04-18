@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) {
     // error if not typecasted to unknown first
     const { email, password } = (await parseBody(req)) as LoginRequestBody;
 
-    console.log("inputted: email ", email, " password: ", password);
     // Attempting to find user associated with inputted email
     const user = await IUserSchema.findOne({ email: email });
 
@@ -37,12 +36,6 @@ export async function POST(req: NextRequest) {
     }
 
     let passwordCorrect = null;
-    console.log(
-      "form input password: ",
-      password,
-      "db user password: ",
-      user.password
-    );
     // ! THIS MUST BE REPLACED WITH PROPER PASSWORD AUTHENTICATION BEFORE DEPLOYMENT
     if (password == user.password) {
       passwordCorrect = true;
