@@ -1,0 +1,62 @@
+.loginButton {
+  vertical-align: middle;
+  background-color: #656d4a;
+  color: white;
+  padding: 12px 60px;
+  font-family: "Avenir", sans-serif;
+  font-size: 18px;
+  margin-bottom: 20px;
+  border: 0px;
+  border-radius: 3%;
+}
+
+.loginButton:hover {
+  background-color: rgb(133, 147, 127);
+  cursor: pointer;
+}
+
+.loginButton:active {
+  background-color: rgb(66, 72, 63);
+}
+
+.loginContainer {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.logo {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.logoImage {
+  width: auto;
+  height: auto;
+}
+
+.signUpCompleteContainer {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+}
+
+.signUpCompleteHeader {
+  font-size: 2.5em;
+  font-family: "Avenir", sans-serif;
+  font-weight: 500;
+  margin-bottom: 60px;
+}
+
+.contentContainer {
+  padding: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  text-align: center;
+  width: 35%;
+  height: 75vh;
+  margin: auto;
+  margin-top: 3.5em;
+}
