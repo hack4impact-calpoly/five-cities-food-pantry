@@ -63,7 +63,7 @@ export default function Signup() {
       if (response.ok) {
         // * account does not exist, adds user document to DB, redirect to login screen
         console.log("Account doesn't exist, creating account.");
-        router.push("/confirmationPage"); // navigates user to this path, also need to pass profile object?
+        router.push("/loginConfirmationPage"); // navigates user to this path, also need to pass profile object?
       } else {
         // * account does exist, redirect user to login
         console.log("Account Exists Already, Please login.");
