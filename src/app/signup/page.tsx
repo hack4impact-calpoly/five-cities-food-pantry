@@ -2,12 +2,18 @@
 import Image from "next/image";
 import style from "./signup.module.css";
 import { ChangeEvent, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation"; // used for navigating the user to a new page
 
 export default function Signup() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [signupErrorMessage, setSignupErrorMessage] = useState(Boolean);
+  const [errorMessageContent, setErrorMessageContent] = useState("");
+  const [accountExistsMessage, setAccountExistsMessage] = useState(Boolean);
+  const router = useRouter(); // router initialization to be able to redirect user to clientPage on successful login
 
   const handleFNChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFirstname(event.target.value);
@@ -24,8 +30,74 @@ export default function Signup() {
   };
 
   const handleSubmit = () => {
-    console.log(firstname + " " + lastname);
-    console.log(email + " " + password);
+    // if names not blank, email and password follow correct formatting
+    if (validateNamesAndEmailAndPassword()) {
+      checkDatabaseAndCreateAccount();
+    }
+  };
+
+  const checkDatabaseAndCreateAccount = async () => {
+    // make POST request to api route, passing email, password, firstname, lastname to be able to check db
+
+    try {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, firstname, lastname }),
+      });
+
+      const data = await response.json();
+
+      // if account doesn't exist, add account to db, then redirect to login
+      // if account does exist, prompt user to login page instead
+      if (response.ok) {
+        // * account does not exist, adds user document to DB, redirect to login screen
+        router.push("/loginConfirmationPage"); // navigates user to this path, also need to pass profile object?
+      } else {
+        // * account does exist, redirect user to login
+        setAccountExistsMessage(true); // prompts user to login instead
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // inputs are valid if not empty & if email follows email formatting & if password is more than 6 characters
+  const validateNamesAndEmailAndPassword = (): boolean => {
+    // check if first name && last name are not empty
+    if (firstname.length == 0 || lastname.length == 0) {
+      setErrorMessageContent(
+        "First and last names must be at least 1 character."
+      );
+      setSignupErrorMessage(true); //display error message
+      return false;
+    }
+
+    //check if email valid
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessageContent(
+        "Please ensure your email follows standard format."
+      );
+      setSignupErrorMessage(true); // display error message
+      return false;
+    }
+
+    //check if password valid
+    const passwordRegex = /^[A-Za-z0-9!@#$%^&*()_+=-]{6,}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMessageContent(
+        "Password must be at least 6 characters long and contain only allowed characters."
+      );
+      setSignupErrorMessage(true); // display error message
+      return false;
+    }
+
+    // If all checks pass, return true
+    setSignupErrorMessage(false);
+    return true;
   };
 
   return (
@@ -43,9 +115,25 @@ export default function Signup() {
 
       <div className={style.signupContainer}>
         <div style={{ flex: 1 }}></div>
+        {signupErrorMessage ? (
+          <div className={style.errorMessage}>
+            <p>{errorMessageContent}</p>
+          </div>
+        ) : (
+          <div className={style.errorMessage}></div>
+        )}
+        {accountExistsMessage ? (
+          <div className={style.existsMessage}>
+            <p>
+              {`There is already an account associated with this email, consider `}
+              <Link href="/login">logging in here</Link>
+            </p>
+          </div>
+        ) : (
+          <div className={style.existsMessage}></div>
+        )}
         <form className={style.signupForm}>
           <p className={style.signupTitle}>Sign up</p>
-
           <div className={style.nameInput}>
             <div className={style.firstNameInput}>
               <label htmlFor="firstname">First Name</label>
@@ -87,7 +175,7 @@ export default function Signup() {
       </div>
 
       <div className={style.buttonContainer}>
-        <button 
+        <button
           type="submit"
           className={style.signupButton}
           onClick={handleSubmit}

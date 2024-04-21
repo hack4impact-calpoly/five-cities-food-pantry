@@ -10,8 +10,11 @@
 
 .signupContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-family: "Avenir";
+  margin: auto;
+  width: 35%;
+  margin-top: 50px;
 }
 
 .signupForm {
@@ -22,8 +25,10 @@
 }
 
 .signupTitle {
-  margin-top: 20px;
   font-size: 40px;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
 }
 .nameInput {
   display: flex;
@@ -82,4 +87,12 @@
 
 .signupButton:active {
   background-color: rgb(66, 72, 63);
+}
+
+.errorMessage {
+  color: red;
+  padding: 0;
+  margin: 0;
+  height: auto;
+  font-family: "Avenir", sans-serif;
 }
