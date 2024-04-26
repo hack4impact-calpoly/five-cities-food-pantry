@@ -1,0 +1,76 @@
+.homePageMainContainer {
+  font-family: Avenir, "sans-serif";
+}
+
+.pageHeader {
+  font-weight: 300;
+  color: rgb(52, 52, 52);
+  margin: 0;
+}
+
+.bottomRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+
+.addNewClientButton {
+  border: 2px solid #656d4a;
+  color: #656d4a;
+  background: none;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+/* * Header Bar Content is composed of two rows, upper and bottom, it is used to align these in a column*/
+
+.headerBarContent {
+  margin: auto;
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+}
+
+.upperRow {
+  display: flex;
+  justify-content: right;
+}
+
+/* * Search Bar Styling */
+.searchBar form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  height: 1.75em;
+  width: 37.5em;
+  border: 1px solid #808080;
+  padding: 6px 8px;
+  padding-left: 0px;
+}
+
+.searchInput {
+  flex-grow: 1; /* Input should expand to fill available space */
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 16px; /* Adjust the size as needed */
+}
+
+.searchButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 24px;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  top: 3px;
+}
