@@ -1,5 +1,7 @@
 .homePageMainContainer {
   font-family: Avenir, "sans-serif";
+  width: 85%;
+  margin: auto;
 }
 
 .pageHeader {
@@ -27,11 +29,9 @@
 /* * Header Bar Content is composed of two rows, upper and bottom, it is used to align these in a column*/
 
 .headerBarContent {
-  margin: auto;
   margin-top: 2em;
   display: flex;
   flex-direction: column;
-  width: 85%;
 }
 
 .upperRow {
@@ -74,3 +74,4 @@
   position: relative;
   top: 3px;
 }
+

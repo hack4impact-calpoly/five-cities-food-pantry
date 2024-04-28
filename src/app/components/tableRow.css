@@ -1,0 +1,21 @@
+.tableRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid #656d4a;
+}
+
+.headOfHouseholdName,
+.phoneNumber,
+.address,
+.lastVisit {
+  padding: 0.65em;
+  margin: 0;
+}
+
+.headOfHouseholdName,
+.phoneNumber,
+.address {
+  border-right: 1px solid #656d4a;
+}
