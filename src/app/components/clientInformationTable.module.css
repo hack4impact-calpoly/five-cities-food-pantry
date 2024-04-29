@@ -1,6 +1,6 @@
 .tableContainer {
   width: 100%;
-  margin-top: 5em;
+  margin-top: 3.5em;
 }
 
 .tableHeaderRow {
@@ -12,8 +12,14 @@
   color: #656d4a;
 }
 
-.info-title {
+.infoTitle {
   height: auto;
   margin: 0;
   padding-bottom: 0.35em;
+}
+
+.errorMessage {
+  color: red;
+  margin-bottom: 1em;
+  font-size: 1.2em;
 }

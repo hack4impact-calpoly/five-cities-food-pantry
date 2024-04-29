@@ -1,7 +1,6 @@
 import React from "react";
 import "./tableRow.css";
 
-// Props to be rendered within the Row
 type TableRowProps = {
   headOfHousehold: string;
   phone: string;
@@ -9,6 +8,7 @@ type TableRowProps = {
   lastVisit: string;
 };
 
+// * A single row that is rendered within the clientInformationTable component
 const TableRow: React.FC<TableRowProps> = ({
   headOfHousehold,
   phone,

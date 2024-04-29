@@ -1,7 +1,8 @@
 import React from "react";
-import "./clientInformationTable.css";
+import style from "./clientInformationTable.module.css";
 import TableRow from "./tableRow";
-import { ChangeEvent, useState } from "react";
+import PageNumberNav from "./pageNumberNav";
+import { useState, useEffect } from "react";
 
 type ClientInfo = {
   headOfHousehold: string;
@@ -14,54 +15,110 @@ type ClientInformationTableProps = {
   clients: ClientInfo[];
 };
 
-const prepareClients = (clients: ClientInfo[]) => {
-  const emptyClient: ClientInfo = {
-    headOfHousehold: "",
-    phone: "",
-    address: "",
-    lastVisit: "",
-  };
+// * Returns a spliced version of the clientList according to the desired records per page, and currentPage set by the user
+const determineClientsIndices = (
+  clients: ClientInfo[],
+  currentPage: number
+) => {
+  //* determines how many records are shown within a single page of the table, change if needed.
+  const recordsPerPage = 11;
 
-  // TODO : Find a better way to display this error message
-  const errorMessageClient: ClientInfo = {
-    headOfHousehold: "No Clients Found.",
-    phone: "",
-    address: "",
-    lastVisit: "",
-  };
+  const bottomRange = (currentPage - 1) * recordsPerPage;
+  const topRange = currentPage * recordsPerPage;
 
-  // no current clients, display error message
-  if (clients.length == 0) {
-    clients.push();
+  // * if records on page not exactly 11 (then extra records will need to be added), so call prepare clients
+  if (clients.length < topRange) {
+    return prepareClients(
+      clients.slice(bottomRange, clients.length - 1),
+      recordsPerPage
+    );
   }
-  // adds empty clients so that 11 total rows will be generated
-  if (clients.length > 11) {
-    const clientsToAdd = 11 - clients.length;
-    for (let i = 0; i < clientsToAdd; i++) {
-      clients.push(emptyClient);
-    }
+  // * if num records exact multiple, no extra records needed
+  else {
+    return clients.slice(bottomRange, topRange);
   }
 };
 
-const calcPages = (clients: ClientInfo[]) => {
-  const numberOfPages = clients.length;
-  return numberOfPages % 11;
+// * adds empty client objects to the new client list (does not affect the database) so that each page will render a full table of records
+// * otherwise, the final page will have a smaller table, which will look worse visually
+const prepareClients = (
+  clientList: ClientInfo[],
+  recordsPerPage: number
+): ClientInfo[] => {
+  // * invisible unicode characters included for styling purposes, otherwise, the border-right on each cell will not look correct
+  const emptyClient: ClientInfo = {
+    headOfHousehold: "­",
+    phone: "­",
+    address: "­",
+    lastVisit: "­",
+  };
+
+  // * adds empty clients to the client side list so a full page of rows will always be generated
+  if (clientList.length < recordsPerPage) {
+    const clientsToAdd = recordsPerPage - clientList.length;
+    for (let i = 0; i < clientsToAdd; i++) {
+      clientList.push(emptyClient);
+    }
+  }
+  return clientList;
+};
+
+// * calculates the number of pages needed to properly render all records
+const calcPages = (clients: ClientInfo[]): number => {
+  const recordsPerPage = 11;
+  return Math.ceil(clients.length / recordsPerPage);
 };
 
 const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
   clients,
 }) => {
+  //* states defined within component or else error occurs
+  const [currentPage, setCurrentPage] = useState(1);
+  const [errorMessage, setErrorMessage] = useState(false);
   const [numPages, setNumPages] = useState(calcPages(clients));
-  console.log("Num Pages: ", numPages);
+
+  // * useEffect handles the event that bubbles up from the pageNav component as well as setting the error message state
+  useEffect(() => {
+    const handlePageNumberClick = (event: CustomEvent) => {
+      setCurrentPage(event.detail.pageNumber);
+    };
+
+    // ! Is there a scenario where the error message is set to true, client list then becomes not empty, but error message isn't reset?
+    setErrorMessage(clients.length === 0 ? true : false);
+
+    // Add event listener for the custom event
+    window.addEventListener(
+      "PageNumberClicked",
+      handlePageNumberClick as EventListener
+    );
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener(
+        "PageNumberClicked",
+        handlePageNumberClick as EventListener
+      );
+    };
+  }, []);
+
+  // * an error message is conditionally rendered if the initial client list is empty
+  // * within tableHeaderRow: generates the titles for each column of table
+  // * determineClientIndices is called on the clients list to render the correct rows according to the page
+  // * pageNumberNav component is included below the table to allow for switching of pages
   return (
-    <div className="tableContainer">
-      <div className="tableHeaderRow">
-        <p className="info-title">Head of Household</p>
-        <p className="info-title">Phone Number</p>
-        <p className="info-title">Address</p>
-        <p className="info-title">Last Visit</p>
+    <div className={style.tableContainer}>
+      {errorMessage && (
+        <div className={style.errorMessage}>
+          Error: There are no clients associated with this user.
+        </div>
+      )}
+      <div className={style.tableHeaderRow}>
+        <p className={style.infoTitle}>Head of Household</p>
+        <p className={style.infoTitle}>Phone Number</p>
+        <p className={style.infoTitle}>Address</p>
+        <p className={style.infoTitle}>Last Visit</p>
       </div>
-      {clients.map((client, index) => (
+      {determineClientsIndices(clients, currentPage)?.map((client, index) => (
         <TableRow
           key={index} // It's better to use a unique ID here if available
           headOfHousehold={client.headOfHousehold}
@@ -70,6 +127,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
           lastVisit={client.lastVisit}
         />
       ))}
+      <PageNumberNav numPages={numPages} />
     </div>
   );
 };

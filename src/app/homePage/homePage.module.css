@@ -6,6 +6,7 @@
 
 .pageHeader {
   font-weight: 300;
+  font-size: 2.65em;
   color: rgb(52, 52, 52);
   margin: 0;
 }
@@ -23,13 +24,13 @@
   border: 2px solid #656d4a;
   color: #656d4a;
   background: none;
-  padding: 1em;
+  padding: 1.25em;
   margin-bottom: 1em;
 }
 /* * Header Bar Content is composed of two rows, upper and bottom, it is used to align these in a column*/
 
 .headerBarContent {
-  margin-top: 2em;
+  margin-top: 2.5em;
   display: flex;
   flex-direction: column;
 }
@@ -74,4 +75,3 @@
   position: relative;
   top: 3px;
 }
-
