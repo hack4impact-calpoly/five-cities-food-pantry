@@ -30,7 +30,7 @@ const PageNumberNav: React.FC<PageNumberNavProps> = ({ numPages }) => {
             className={`individual-number ${
               pageNumber === currentPage ? "selectedListItem" : ""
             }`}
-            id={`page-number-${pageNumber}`}
+            key={`page-number-${pageNumber}`}
           >
             <p onClick={() => pageNumberClicked(pageNumber)}>{pageNumber}</p>
           </li>
