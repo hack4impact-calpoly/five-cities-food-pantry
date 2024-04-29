@@ -17,10 +17,18 @@ const TableRow: React.FC<TableRowProps> = ({
 }) => {
   return (
     <div className="tableRow">
-      <div className="headOfHouseholdName">{headOfHousehold}</div>
-      <div className="phoneNumber">{phone}</div>
-      <div className="address">{address}</div>
-      <div className="lastVisit">{lastVisit}</div>
+      <div className="headOfHouseholdName" title={headOfHousehold}>
+        {headOfHousehold}
+      </div>
+      <div className="phone" title={phone}>
+        {phone}
+      </div>
+      <div className="address" title={address}>
+        {address}
+      </div>
+      <div className="lastVisit" title={lastVisit}>
+        {lastVisit}
+      </div>
     </div>
   );
 };
