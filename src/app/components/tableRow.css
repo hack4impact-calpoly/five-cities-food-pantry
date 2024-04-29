@@ -6,16 +6,16 @@
   border: 1px solid #656d4a;
 }
 
-.headOfHouseholdName,
-.phone,
+.headOfHousehold,
+.phoneNumber,
 .address,
 .lastVisit {
   padding: 0.65em;
   margin: 0;
 }
 
-.headOfHouseholdName,
-.phone,
+.headOfHousehold,
+.phoneNumber,
 .address {
   border-right: 1px solid #656d4a;
 }

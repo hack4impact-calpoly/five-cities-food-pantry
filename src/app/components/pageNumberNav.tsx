@@ -20,7 +20,7 @@ const PageNumberNav: React.FC<PageNumberNavProps> = ({ numPages }) => {
 
     window.dispatchEvent(event);
   };
-
+  console.log("page number within PNN: ", numPages);
   // * creates the navigation numbers/buttons at the botton of the clientInformationTable, will render as many as there are pages
   return (
     <div className="page-numbers-container">

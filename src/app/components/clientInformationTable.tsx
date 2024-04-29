@@ -4,9 +4,9 @@ import TableRow from "./tableRow";
 import PageNumberNav from "./pageNumberNav";
 import { useState, useEffect } from "react";
 
-type ClientInfo = {
+export type ClientInfo = {
   headOfHousehold: string;
-  phone: string;
+  phoneNumber: string;
   address: string;
   lastVisit: string;
 };
@@ -20,11 +20,16 @@ const determineClientsIndices = (
   clients: ClientInfo[],
   currentPage: number
 ) => {
+  // * if for some reason the data isn't an array or is empty (solves slice error for empty list as well)
+  if (!Array.isArray(clients) || clients.length == 0) {
+    clients = [];
+  }
+
   //* determines how many records are shown within a single page of the table, change if needed.
   const recordsPerPage = 11;
-
   const bottomRange = (currentPage - 1) * recordsPerPage;
   const topRange = currentPage * recordsPerPage;
+  console.log("CLIENTS LIST WITHIN DETERMINE: ", clients);
 
   // * if records on page not exactly 11 (then extra records will need to be added), so call prepare clients
   if (clients.length < topRange) {
@@ -48,7 +53,7 @@ const prepareClients = (
   // * invisible unicode characters included for styling purposes, otherwise, the border-right on each cell will not look correct
   const emptyClient: ClientInfo = {
     headOfHousehold: "­",
-    phone: "­",
+    phoneNumber: "­",
     address: "­",
     lastVisit: "­",
   };
@@ -75,7 +80,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
   //* states defined within component or else error occurs
   const [currentPage, setCurrentPage] = useState(1);
   const [errorMessage, setErrorMessage] = useState(false);
-  const [numPages, setNumPages] = useState(calcPages(clients));
+  const [numPages, setNumPages] = useState(0);
 
   // * useEffect handles the event that bubbles up from the pageNav component as well as setting the error message state
   useEffect(() => {
@@ -83,8 +88,11 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
       setCurrentPage(event.detail.pageNumber);
     };
 
+    // * updates the number of pages state
+    setNumPages(calcPages(clients));
+
     // ! Is there a scenario where the error message is set to true, client list then becomes not empty, but error message isn't reset?
-    setErrorMessage(clients.length === 0 ? true : false);
+    setErrorMessage(clients.length === 0);
 
     // Add event listener for the custom event
     window.addEventListener(
@@ -99,7 +107,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
         handlePageNumberClick as EventListener
       );
     };
-  }, []);
+  }, [clients]);
 
   // * an error message is conditionally rendered if the initial client list is empty
   // * within tableHeaderRow: generates the titles for each column of table
@@ -122,7 +130,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
         <TableRow
           key={index} // It's better to use a unique ID here if available
           headOfHousehold={client.headOfHousehold}
-          phone={client.phone}
+          phoneNumber={client.phoneNumber}
           address={client.address}
           lastVisit={client.lastVisit}
         />
