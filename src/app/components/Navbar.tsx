@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <a href="/" className="navbar-link">
+        <a href="/homePage" className="navbar-link">
           <img
             src="/logo.png"
             alt="Five Cities Christian Women Food Pantry Logo"
@@ -13,7 +13,7 @@ const Navbar = () => {
           />
         </a>
         <div className="navbar-right-links">
-          <a href="/clientSearch" className="navbar-link">
+          <a href="/homePage" className="navbar-link">
             Client Search
           </a>
           <a href="/report" className="navbar-link">

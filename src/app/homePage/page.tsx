@@ -56,9 +56,9 @@ export default function HomePage() {
       <div className={style.homePageMainContainer}>
         <div className={style.headerBarContent}>
           <div className={style.upperRow}>
-            <button className={style.addNewClientButton}>
+            <a href="addNewClient" className={style.addNewClientButton}>
               + Add New Client
-            </button>
+            </a>
           </div>
           <div className={style.bottomRow}>
             <h1 className={style.pageHeader}>Client Search</h1>
