@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
 
     // Fetching clients
     const clients = await IClientSchema.find();
-    console.log("Clients: ", clients);
 
     // Checking if clients are found
     if (clients.length === 0) {
@@ -42,15 +41,16 @@ export async function POST(req: NextRequest) {
 
     //save the new client to the database
     await newClient.save();
-    return NextResponse.json({ message: 'Operation successful' }, { status: 200 });
-  }
-  //if unable to add client, return error
-  catch(err) {
+    return NextResponse.json(
+      { message: "Operation successful" },
+      { status: 200 }
+    );
+  } catch (err) {
+    //if unable to add client, return error
     console.log("Error adding client:", err);
     return NextResponse.json(
       { error: "Error adding client." },
-      { status: 500}
+      { status: 500 }
     );
   }
 }
-
