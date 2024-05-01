@@ -52,78 +52,85 @@ export default function AddNewClient() {
   return (
     <>
       <Navbar />
-      <div>
-        <h2 className={styles.header}>Add New Client</h2>
-        <h3 className={styles.subheader}> Head of Household Information </h3>
-        <NewClientFields />
-      </div>
-      <div>
-        <h3 className={styles.subheader}> Household Information </h3>
-        <h4 className={styles.insideSubheader}> Household Size </h4>
+      <div className={styles.container}>
         <div>
-          <div className={styles.inputGroup}>
-            <label className={styles.inputLabel} htmlFor="numAdults">
-              Number of Adults
-            </label>
-            <select
-              id="numAdults"
-              className={styles.inputBar}
-              name="category"
-              onChange={(event) => handleParentChange(event.target.value)}
-            >
-              <option id="1">1</option>
-              <option id="2">2</option>
-              <option id="3">3</option>
-              <option id="4">4</option>
-              <option id="5">5</option>
-              <option id="6">More than 5</option>{" "}
-              {/* drop down menu for num of adults */}
-            </select>
-          </div>
-          <div className={styles.inputGroup}>
-            <label className={styles.inputLabel} htmlFor="numChildren">
-              Number of Children
-            </label>
-            <select
-              className={styles.inputBar}
-              id="numChildren"
-              onChange={(event) => handleChildrenChange(event.target.value)}
-            >
-              <option id="0">0</option>
-              <option id="1">1</option>
-              <option id="2">2</option>
-              <option id="3">3</option>
-              <option id="4">4</option>
-              <option id="5">5</option>
-              <option id="6">More than 5</option>{" "}
-              {/* drop down menu for num of children */}
-            </select>
-          </div>
+          <h2 className={styles.header}>Add New Client</h2>
+          <h3 className={styles.subheader}> Head of Household Information </h3>
+          <NewClientFields />
         </div>
-        {adultFields}
-        {childFields}
-      </div>
-      <div>
-        <h4 className={styles.subheader}> Additional Information </h4>
-        <div className={styles.radioButton}>
-          <input
-            type="radio"
-            id="option1"
-            value="option1"
-            checked={selectedValue}
-            onClick={handleRadioChange} // handle state with onClick (as opposed to onChange) so users can unclick if they change their minds
-            onChange={() => {}} // no-op onChange field to keep react happy - react expects this when checked is controlled
-          />
+        <div>
+          <h3 className={styles.subheader}> Household Information </h3>
+          <h4 className={styles.insideSubheader}> Household Size </h4>
+          <div>
+            <div className={styles.inputGroup}>
+              <label className={styles.inputLabel} htmlFor="numAdults">
+                Number of Adults
+              </label>
+              <select
+                id="numAdults"
+                className={styles.inputBar}
+                name="category"
+                onChange={(event) => handleParentChange(event.target.value)}
+              >
+                <option id="1">1</option>
+                <option id="2">2</option>
+                <option id="3">3</option>
+                <option id="4">4</option>
+                <option id="5">5</option>
+                <option id="6">More than 5</option>{" "}
+                {/* drop down menu for num of adults */}
+              </select>
+            </div>
+            <div className={styles.inputGroup}>
+              <label className={styles.inputLabel} htmlFor="numChildren">
+                Number of Children
+              </label>
+              <select
+                className={styles.inputBar}
+                id="numChildren"
+                onChange={(event) => handleChildrenChange(event.target.value)}
+              >
+                <option id="0">0</option>
+                <option id="1">1</option>
+                <option id="2">2</option>
+                <option id="3">3</option>
+                <option id="4">4</option>
+                <option id="5">5</option>
+                <option id="6">More than 5</option>{" "}
+                {/* drop down menu for num of children */}
+              </select>
+            </div>
+          </div>
+          {adultFields}
+          {childFields}
+        </div>
+        <div>
+          <h4 className={styles.subheader}> Additional Information </h4>
+          <div className={styles.radioButton}>
+            <input
+              type="radio"
+              id="option1"
+              value="option1"
+              checked={selectedValue}
+              onClick={handleRadioChange} // handle state with onClick (as opposed to onChange) so users can unclick if they change their minds
+              onChange={() => {}} // no-op onChange field to keep react happy - react expects this when checked is controlled
+            />
 
-          <label htmlFor="option1" className={styles.radioLabel}>
-            Authorize pick-up
-          </label>
-          {/* for now, the button is set to being checked always */}
+            <label htmlFor="option1" className={styles.radioLabel}>
+              Authorize pick-up
+            </label>
+          </div>
+          {selectedValue ? (
+            <>
+              <h4 className={styles.insideSubheader}> Authorized pick-up </h4>
+              <NewClientFields />
+            </>
+          ) : (
+            ""
+          )}
         </div>
-        <h4 className={styles.insideSubheader}> Authorized pick-up </h4>
-        <NewClientFields />
+        <button className={styles.addButton}> Add Client </button>
       </div>
-      <button className={styles.addButton}> Add Client </button>
     </>
   );
 }

@@ -1,3 +1,7 @@
+.container {
+  margin-left: 30px;
+}
+
 .header {
   font-family: "Avenir";
   color: #000000;
@@ -52,12 +56,13 @@
 .radioButton {
   display: flex;
   flex-direction: row;
-  margin-bottom: 5px;
+  margin-bottom: 30px;
 }
 
 .radioLabel {
   font-family: "Avenir", sans-serif;
   color: black;
+  
 }
 
 .addButton {
