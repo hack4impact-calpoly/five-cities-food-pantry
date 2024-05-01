@@ -1,11 +1,8 @@
 import React from "react";
 import "./NewClientFields.css";
 
-interface Props {
-    isSelf: boolean
-}
 
-const NewClientFields = (props: Props) => {
+const NewClientFields = () => {
   return (
     <div>
       <div className="inputGroup">
@@ -30,7 +27,7 @@ const NewClientFields = (props: Props) => {
       </div>
       <div className="inputGroup">
         <label className="inputLabel">
-          {props.isSelf ? "Birth Date": "Age"} <br></br>
+          Birth Date <br></br>
           <input
             type="text"
             className="inputBar"

@@ -23,7 +23,7 @@ export default function AddNewClient() {
       <div>
         <h2 className={styles.header}>Add New Client</h2>
         <h3 className={styles.subheader}> Head of Household Information </h3>
-        <NewClientFields isSelf={true}/>
+        <NewClientFields />
 
       </div>
       <div>
@@ -71,9 +71,9 @@ export default function AddNewClient() {
           </div>
         </div>
         <h4 className={styles.insideSubheader}> Adult 1 </h4>
-        <NewClientFields isSelf={false} />
+        <NewClientFields />
         <h4 className={styles.insideSubheader}> Child 1 </h4>
-        <NewClientFields isSelf={false} />
+        <NewClientFields />
       </div>
       <div>
         <h4 className={styles.subheader}> Additional Information </h4>
@@ -83,16 +83,17 @@ export default function AddNewClient() {
             id="option1"
             value="option1"
             checked={selectedValue}
-            onClick={handleRadioChange}
+            onClick={handleRadioChange} // handle state with onClick (as opposed to onChange) so users can unclick if they change their minds
+            onChange={() => {}} // no-op onChange field to keep react happy - react expects this when checked is controlled
           />
           
           <label htmlFor="option1" className={styles.radioLabel}>
-            Authorized
+            Authorize pick-up
           </label>{" "}
           {/* for now, the button is set to being checked always */}    
         </div>
         <h4 className={styles.insideSubheader}> Authorized pick-up </h4>
-        <NewClientFields isSelf={false} />
+        <NewClientFields/>
       </div>
       <button className={styles.addButton}> Add Client </button>
     </>
