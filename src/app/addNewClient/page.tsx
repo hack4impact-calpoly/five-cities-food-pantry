@@ -5,10 +5,10 @@ import styles from "./addNewClient.module.css";
 import { useState } from "react";
 
 export default function AddNewClient() {
-  const [selectedValue, setSelectedValue] = useState("option1");
+  const [selectedValue, setSelectedValue] = useState(false);
 
-  const handleRadioChange = (value: any) => {
-    setSelectedValue(value);
+  const handleRadioChange = () => { 
+    setSelectedValue(!selectedValue);
   };
 
   const [category, setCategory] = useState("");
@@ -82,13 +82,14 @@ export default function AddNewClient() {
             type="radio"
             id="option1"
             value="option1"
-            checked={selectedValue === "option1"}
-            onChange={() => handleRadioChange("option1")}
+            checked={selectedValue}
+            onClick={handleRadioChange}
           />
+          
           <label htmlFor="option1" className={styles.radioLabel}>
             Authorized
           </label>{" "}
-          {/* for now, the button is set to being checked always */}
+          {/* for now, the button is set to being checked always */}    
         </div>
         <h4 className={styles.insideSubheader}> Authorized pick-up </h4>
         <NewClientFields isSelf={false} />
