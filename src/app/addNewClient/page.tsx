@@ -2,19 +2,51 @@
 import Navbar from "@components/Navbar";
 import NewClientFields from "@components/NewClientFields";
 import styles from "./addNewClient.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AddNewClient() {
   const [selectedValue, setSelectedValue] = useState(false);
+  const [numChildren, setNumChildren] = useState(0);
+  const [numAdults, setNumAdults] = useState(1);
+  const [childFields, setChildFields] = useState<JSX.Element[]>([]);
+  const [adultFields, setAdultFields] = useState<JSX.Element[]>([]);
 
-  const handleRadioChange = () => { 
+  useEffect(() => {
+    let fields = [];
+    for (let i = 0; i < numChildren; i++) {
+      fields.push(
+        <div key={i}>
+          <h4 className={styles.insideSubheader}> Child {i + 1} </h4>
+          <NewClientFields />
+        </div>
+      );
+    }
+    setChildFields(fields);
+
+    fields = [];
+    for (let i = 1; i < numAdults; i++) {
+      fields.push(
+        <div key={i}>
+          <h4 className={styles.insideSubheader}> Adult {i + 1} </h4>
+          <NewClientFields />
+        </div>
+      );
+    }
+    setAdultFields(fields);
+  }, [numChildren, numAdults]);
+
+  const handleRadioChange = () => {
     setSelectedValue(!selectedValue);
   };
 
-  const [category, setCategory] = useState("");
-  const handleCategoryChange = (category: any) => {
-    setCategory(category);
-    console.log(category);
+  const handleChildrenChange = (value: any) => {
+    setNumChildren(value);
+    //console.log(value);
+  };
+
+  const handleParentChange = (value: any) => {
+    setNumAdults(value);
+    //console.log(value);
   };
 
   return (
@@ -24,7 +56,6 @@ export default function AddNewClient() {
         <h2 className={styles.header}>Add New Client</h2>
         <h3 className={styles.subheader}> Head of Household Information </h3>
         <NewClientFields />
-
       </div>
       <div>
         <h3 className={styles.subheader}> Household Information </h3>
@@ -38,15 +69,14 @@ export default function AddNewClient() {
               id="numAdults"
               className={styles.inputBar}
               name="category"
-              value={category}
-              onChange={(event) => handleCategoryChange(event.target.value)}
+              onChange={(event) => handleParentChange(event.target.value)}
             >
-              <option id="0">1</option>
-              <option id="1">2</option>
-              <option id="1">3</option>
-              <option id="1">4</option>
-              <option id="1">5</option>
-              <option id="1">More than 5</option>{" "}
+              <option id="1">1</option>
+              <option id="2">2</option>
+              <option id="3">3</option>
+              <option id="4">4</option>
+              <option id="5">5</option>
+              <option id="6">More than 5</option>{" "}
               {/* drop down menu for num of adults */}
             </select>
           </div>
@@ -57,23 +87,21 @@ export default function AddNewClient() {
             <select
               className={styles.inputBar}
               id="numChildren"
-              value={category}
-              onChange={(event) => handleCategoryChange(event.target.value)}
+              onChange={(event) => handleChildrenChange(event.target.value)}
             >
-              <option id="0">1</option>
-              <option id="1">2</option>
-              <option id="1">3</option>
-              <option id="1">4</option>
-              <option id="1">5</option>
-              <option id="1">More than 5</option>{" "}
+              <option id="0">0</option>
+              <option id="1">1</option>
+              <option id="2">2</option>
+              <option id="3">3</option>
+              <option id="4">4</option>
+              <option id="5">5</option>
+              <option id="6">More than 5</option>{" "}
               {/* drop down menu for num of children */}
             </select>
           </div>
         </div>
-        <h4 className={styles.insideSubheader}> Adult 1 </h4>
-        <NewClientFields />
-        <h4 className={styles.insideSubheader}> Child 1 </h4>
-        <NewClientFields />
+        {adultFields}
+        {childFields}
       </div>
       <div>
         <h4 className={styles.subheader}> Additional Information </h4>
@@ -86,14 +114,14 @@ export default function AddNewClient() {
             onClick={handleRadioChange} // handle state with onClick (as opposed to onChange) so users can unclick if they change their minds
             onChange={() => {}} // no-op onChange field to keep react happy - react expects this when checked is controlled
           />
-          
+
           <label htmlFor="option1" className={styles.radioLabel}>
             Authorize pick-up
-          </label>{" "}
-          {/* for now, the button is set to being checked always */}    
+          </label>
+          {/* for now, the button is set to being checked always */}
         </div>
         <h4 className={styles.insideSubheader}> Authorized pick-up </h4>
-        <NewClientFields/>
+        <NewClientFields />
       </div>
       <button className={styles.addButton}> Add Client </button>
     </>
