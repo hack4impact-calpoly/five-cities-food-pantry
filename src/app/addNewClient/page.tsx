@@ -1,5 +1,6 @@
 "use client";
-import Navbar from "../components/Navbar";
+import Navbar from "@components/Navbar";
+import NewClientFields from "@components/NewClientFields";
 import styles from "./addNewClient.module.css";
 import { useState } from "react";
 
@@ -22,26 +23,8 @@ export default function AddNewClient() {
       <div>
         <h2 className={styles.header}>Add New Client</h2>
         <h3 className={styles.subheader}> Head of Household Information </h3>
-        <div>
-          <div className={styles.inputGroup}>
-            <label className={styles.inputLabel}>
-              First Name <br></br>
-              <input id="firstName" type="text" className={styles.inputBar} required />
-            </label>
-          </div>
-          <div className={styles.inputGroup}>
-            <label className={styles.inputLabel}>
-              Last Name <br></br>
-              <input id="lastName" type="text" className={styles.inputBar} required />
-            </label>
-          </div>
-        </div>
-        <div className={styles.inputGroup}>
-          <label className={styles.inputLabel}>
-            Birth Date <br></br>
-            <input id="birthdate" type="text" className={styles.inputBar} required />
-          </label>
-        </div>
+        <NewClientFields isSelf={true}/>
+
       </div>
       <div>
         <h3 className={styles.subheader}> Household Information </h3>
@@ -88,45 +71,9 @@ export default function AddNewClient() {
           </div>
         </div>
         <h4 className={styles.insideSubheader}> Adult 1 </h4>
-        <div>
-          <div className={styles.inputGroup}>
-            <label className={styles.inputLabel}>
-              First Name <br />
-              <input type="text" className={styles.inputBar} required />
-            </label>
-          </div>
-          <div className={styles.inputGroup}>
-            <label className={styles.inputLabel}>
-              Last Name <br />
-              <input type="text" className={styles.inputBar} required />
-            </label>
-          </div>
-          <div className={styles.inputGroup}>
-            <label className={styles.inputLabel}>
-              Age <br />
-              <input type="text" className={styles.inputBar} required />
-            </label>
-          </div>
-        </div>
+        <NewClientFields isSelf={false} />
         <h4 className={styles.insideSubheader}> Child 1 </h4>
-        <div className={styles.inputGroup}>
-          <label className={styles.inputLabel}>
-            First Name <br />
-            <input type="text" className={styles.inputBar} required />
-          </label>
-        </div>
-        <div className={styles.inputGroup}>
-          <label className={styles.inputLabel}>
-            Last Name <br />
-            <input type="text" className={styles.inputBar} required />
-          </label>
-        </div>
-        <div className={styles.inputGroup}>
-          <label className={styles.inputLabel}>
-            Age <br />
-            <input type="text" className={styles.inputBar} required />
-          </label>
-        </div>
+        <NewClientFields isSelf={false} />
       </div>
       <div>
         <h4 className={styles.subheader}> Additional Information </h4>
@@ -144,24 +91,7 @@ export default function AddNewClient() {
           {/* for now, the button is set to being checked always */}
         </div>
         <h4 className={styles.insideSubheader}> Authorized pick-up </h4>
-        <div className={styles.inputGroup}>
-          <label className={styles.inputLabel}>
-            First Name <br />
-            <input className={styles.inputBar} />
-          </label>
-        </div>
-        <div className={styles.inputGroup}>
-          <label className={styles.inputLabel}>
-            Last Name <br />
-            <input className={styles.inputBar} />
-          </label>
-        </div>
-        <div className={styles.inputGroup}>
-          <label className={styles.inputLabel}>
-            Age <br />
-            <input className={styles.inputBar} />
-          </label>
-        </div>
+        <NewClientFields isSelf={false} />
       </div>
       <button className={styles.addButton}> Add Client </button>
     </>
