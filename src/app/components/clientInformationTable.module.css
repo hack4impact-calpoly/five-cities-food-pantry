@@ -1,0 +1,25 @@
+.tableContainer {
+  width: 100%;
+  margin-top: 3.5em;
+}
+
+.tableHeaderRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  padding: 0;
+  font-size: 1.35em;
+  color: #656d4a;
+}
+
+.infoTitle {
+  height: auto;
+  margin: 0;
+  padding-bottom: 0.35em;
+}
+
+.errorMessage {
+  color: red;
+  margin-bottom: 1em;
+  font-size: 1.2em;
+}

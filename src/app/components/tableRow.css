@@ -1,0 +1,34 @@
+.tableRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid #656d4a;
+}
+
+.headOfHousehold,
+.phoneNumber,
+.address,
+.lastVisit {
+  padding: 0.65em;
+  margin: 0;
+}
+
+.headOfHousehold,
+.phoneNumber,
+.address {
+  border-right: 1px solid #656d4a;
+}
+
+/* if any of the data cells have an input that is too long, truncate the information accordingly and add an ellipsis*/
+.tableRow div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* on hover of a truncated cell, display the full information */
+.tableRow div:hover {
+  overflow: visible;
+  white-space: normal;
+}

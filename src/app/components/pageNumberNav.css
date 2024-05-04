@@ -1,0 +1,38 @@
+.page-numbers-container {
+  height: auto;
+  display: flex;
+  justify-content: right;
+}
+
+.numbers-list {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  height: 3em;
+  margin: 0;
+  padding: 0;
+  justify-content: right;
+}
+
+.individual-number {
+  color: #525252;
+  font-size: 1.5em;
+  padding: 8px;
+  height: auto;
+  list-style: none;
+}
+
+.individual-number p {
+  position: relative;
+  bottom: 10px;
+}
+
+.individual-number p:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.selectedListItem {
+  text-decoration: underline;
+  
+}
