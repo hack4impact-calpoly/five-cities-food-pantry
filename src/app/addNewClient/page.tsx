@@ -2,61 +2,95 @@
 import Navbar from "@components/Navbar";
 import NewClientFields from "@components/NewClientFields";
 import styles from "./addNewClient.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
+
+export interface Member {
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  isAdult: boolean;
+}
 
 export default function AddNewClient() {
+
   const [selectedValue, setSelectedValue] = useState(false);
   const [numChildren, setNumChildren] = useState(0);
   const [numAdults, setNumAdults] = useState(1);
-  const [childFields, setChildFields] = useState<JSX.Element[]>([]);
-  const [adultFields, setAdultFields] = useState<JSX.Element[]>([]);
+  const [householdMem, setHouseholdMem] = useState<Member[]>([]);
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    entryDates: [],
+    authMem: [],
+    householdMem: [],
+    phoneNumber: "",
+    email: "",
+    address: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
+    console.log(formData);
+  };
+
+  const handleMemChange = (e: ChangeEvent<HTMLInputElement>, index: number, isAdult: boolean) => {
+    const { name, value} = e.target;
+    setHouseholdMem(prev => prev.map((mem, idx) => {
+        if (mem.isAdult === isAdult && idx === index) {
+            return { ...mem, [name]: value };
+        }
+        return mem;
+    }));
+
+    console.log(householdMem);
+};
 
   useEffect(() => {
-    let fields = [];
-    for (let i = 0; i < numChildren; i++) {
-      fields.push(
-        <div key={i}>
-          <h4 className={styles.insideSubheader}> Child {i + 1} </h4>
-          <NewClientFields />
-        </div>
-      );
-    }
-    setChildFields(fields);
+    setHouseholdMem((prev) => {
+      let children = prev.filter((mem) => !mem.isAdult).slice(0, numChildren);
+      let adults = prev.filter((mem) => mem.isAdult).slice(0, numAdults);
 
-    fields = [];
-    for (let i = 1; i < numAdults; i++) {
-      fields.push(
-        <div key={i}>
-          <h4 className={styles.insideSubheader}> Adult {i + 1} </h4>
-          <NewClientFields />
-        </div>
-      );
-    }
-    setAdultFields(fields);
+      while (children.length < numChildren) {
+        children.push({
+          firstName: "",
+          lastName: "",
+          birthDate: "",
+          isAdult: false,
+        });
+      }
+      while (adults.length < numAdults - 1) {
+        adults.push({
+          firstName: "",
+          lastName: "",
+          birthDate: "",
+          isAdult: true,
+        });
+      }
+
+      return [...children, ...adults];
+    });
+
   }, [numChildren, numAdults]);
+
+  const handleSubmit = () => {
+    console.log(formData);
+  };
 
   const handleRadioChange = () => {
     setSelectedValue(!selectedValue);
   };
 
-  const handleChildrenChange = (value: any) => {
-    setNumChildren(value);
-    //console.log(value);
-  };
-
-  const handleParentChange = (value: any) => {
-    setNumAdults(value);
-    //console.log(value);
-  };
-
   return (
     <>
       <Navbar />
-      <div className={styles.container}>
+      <form className={styles.container} onSubmit={handleSubmit}>
         <div>
           <h2 className={styles.header}>Add New Client</h2>
           <h3 className={styles.subheader}> Head of Household Information </h3>
-          <NewClientFields />
+          <NewClientFields onAction={handleChange} />
         </div>
         <div>
           <h3 className={styles.subheader}> Household Information </h3>
@@ -70,7 +104,7 @@ export default function AddNewClient() {
                 id="numAdults"
                 className={styles.inputBar}
                 name="category"
-                onChange={(event) => handleParentChange(event.target.value)}
+                onChange={(e) => setNumAdults(parseInt(e.target.value))}
               >
                 <option id="1">1</option>
                 <option id="2">2</option>
@@ -88,7 +122,9 @@ export default function AddNewClient() {
               <select
                 className={styles.inputBar}
                 id="numChildren"
-                onChange={(event) => handleChildrenChange(event.target.value)}
+                onChange={(e) => {
+                  setNumChildren(parseInt(e.target.value));
+                }}
               >
                 <option id="0">0</option>
                 <option id="1">1</option>
@@ -101,8 +137,27 @@ export default function AddNewClient() {
               </select>
             </div>
           </div>
-          {adultFields}
-          {childFields}
+          {householdMem
+            .filter((mem) => mem.isAdult)
+            .map((member, index) => (
+              <div key={"adult-" + index}>
+                <h4>Adult {index + 2}</h4>
+                <NewClientFields
+                  onAction={(e) => handleMemChange(e, index, true)}
+                />
+              </div>
+            ))}
+
+          {householdMem
+            .filter((mem) => !mem.isAdult)
+            .map((member, index) => (
+              <div key={"child-" + index}>
+                <h4>Child {index + 1}</h4>
+                <NewClientFields
+                  onAction={(e) => handleMemChange(e, index, false)}
+                />
+              </div>
+            ))}
         </div>
         <div>
           <h4 className={styles.subheader}> Additional Information </h4>
@@ -123,14 +178,17 @@ export default function AddNewClient() {
           {selectedValue ? (
             <>
               <h4 className={styles.insideSubheader}> Authorized pick-up </h4>
-              <NewClientFields />
+              <NewClientFields onAction={handleChange} />
             </>
           ) : (
             ""
           )}
         </div>
-        <button className={styles.addButton}> Add Client </button>
-      </div>
+        <button type="submit" className={styles.addButton}>
+          {" "}
+          Add Client{" "}
+        </button>
+      </form>
     </>
   );
 }
