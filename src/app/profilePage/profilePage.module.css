@@ -1,0 +1,43 @@
+.profilePage {
+    font-family: "Avenir", sans-serif;
+    background-color: white;
+    padding: 10px;
+    margin-top: 50px;
+    margin-left: 50px;
+    font-size: medium;
+}
+
+.icons {
+    display: flex;
+    gap: 600px;
+}
+
+.userInfo {
+    padding: 20px;
+}
+
+.nameInfo {
+    display: flex;
+    gap:400px;
+}
+
+.nameItem{
+    font-family: "Avenir", sans-serif;
+}
+
+.infoBox {
+    padding: 10px;
+    padding-right: 200px;
+    border: solid rgb(94, 161, 94) 0.5px; 
+}
+
+.logout {
+    background-color: white;
+    color: rgb(94, 161, 94);
+    border: 0.5px solid rgb(94, 161, 94);
+    padding-top: 20px; 
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-top: 20px;
+}
