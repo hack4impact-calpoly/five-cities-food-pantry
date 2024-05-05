@@ -4,19 +4,32 @@ import NewClientFields from "@components/NewClientFields";
 import styles from "./addNewClient.module.css";
 import { useEffect, useState, ChangeEvent } from "react";
 
-export interface Member {
+interface Member {
   firstName: string;
   lastName: string;
   birthDate: string;
   isAdult: boolean;
+  headHousehold: string;
+}
+
+interface AuthMem {
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  client: string;
 }
 
 export default function AddNewClient() {
-
   const [selectedValue, setSelectedValue] = useState(false);
   const [numChildren, setNumChildren] = useState(0);
   const [numAdults, setNumAdults] = useState(1);
   const [householdMem, setHouseholdMem] = useState<Member[]>([]);
+  const [authMem, setAuthMem] = useState({
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    client: "",
+  });
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -36,17 +49,29 @@ export default function AddNewClient() {
     console.log(formData);
   };
 
-  const handleMemChange = (e: ChangeEvent<HTMLInputElement>, index: number, isAdult: boolean) => {
-    const { name, value} = e.target;
-    setHouseholdMem(prev => prev.map((mem, idx) => {
+  const handleMemChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number,
+    isAdult: boolean
+  ) => {
+    const { name, value } = e.target;
+    setHouseholdMem((prev) =>
+      prev.map((mem, idx) => {
         if (mem.isAdult === isAdult && idx === index) {
-            return { ...mem, [name]: value };
+          return { ...mem, [name]: value };
         }
         return mem;
-    }));
+      })
+    );
 
     console.log(householdMem);
-};
+  };
+
+  const handleAuthMem = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setAuthMem({ ...authMem, [name]: value });
+    console.log(authMem);
+  };
 
   useEffect(() => {
     setHouseholdMem((prev) => {
@@ -59,6 +84,7 @@ export default function AddNewClient() {
           lastName: "",
           birthDate: "",
           isAdult: false,
+          headHousehold: "",
         });
       }
       while (adults.length < numAdults - 1) {
@@ -67,16 +93,30 @@ export default function AddNewClient() {
           lastName: "",
           birthDate: "",
           isAdult: true,
+          headHousehold: "",
         });
       }
 
       return [...children, ...adults];
     });
-
   }, [numChildren, numAdults]);
 
-  const handleSubmit = () => {
-    console.log(formData);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // TODO: save client and retrieve client id
+
+    // save household members to household mem database
+    fetch("/api/householdMembers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ members: householdMem }),
+    })
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
+
+    //console.log(formData);
   };
 
   const handleRadioChange = () => {
@@ -90,7 +130,7 @@ export default function AddNewClient() {
         <div>
           <h2 className={styles.header}>Add New Client</h2>
           <h3 className={styles.subheader}> Head of Household Information </h3>
-          <NewClientFields onAction={handleChange} />
+          <NewClientFields isClient={true} onAction={handleChange} />
         </div>
         <div>
           <h3 className={styles.subheader}> Household Information </h3>
@@ -143,6 +183,7 @@ export default function AddNewClient() {
               <div key={"adult-" + index}>
                 <h4>Adult {index + 2}</h4>
                 <NewClientFields
+                  isClient={false}
                   onAction={(e) => handleMemChange(e, index, true)}
                 />
               </div>
@@ -154,6 +195,7 @@ export default function AddNewClient() {
               <div key={"child-" + index}>
                 <h4>Child {index + 1}</h4>
                 <NewClientFields
+                  isClient={false}
                   onAction={(e) => handleMemChange(e, index, false)}
                 />
               </div>
@@ -178,7 +220,7 @@ export default function AddNewClient() {
           {selectedValue ? (
             <>
               <h4 className={styles.insideSubheader}> Authorized pick-up </h4>
-              <NewClientFields onAction={handleChange} />
+              <NewClientFields isClient={false} onAction={handleAuthMem} />
             </>
           ) : (
             ""
