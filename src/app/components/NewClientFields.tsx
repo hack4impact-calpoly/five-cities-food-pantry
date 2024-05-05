@@ -63,6 +63,18 @@ const NewClientFields = ({ onAction, isClient }: Props) => {
           </div>
           <div className="inputGroup">
             <label className="inputLabel">
+              Phone Number <br></br>
+              <input
+                type="text"
+                name="phoneNumber"
+                className="inputBar"
+                onChange={(e) => onAction(e)}
+                required
+              />
+            </label>
+          </div>
+          <div className="inputGroup">
+            <label className="inputLabel">
               Address <br></br>
               <input
                 type="text"
