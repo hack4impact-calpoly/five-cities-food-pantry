@@ -1,13 +1,12 @@
-import React, {ChangeEvent} from "react";
+import React, { ChangeEvent } from "react";
 import "./NewClientFields.css";
-import { Member } from "app/addNewClient/page";
 
 interface Props {
-  onAction: (e:  ChangeEvent<HTMLInputElement>) => void;
-  
+  onAction: (e: ChangeEvent<HTMLInputElement>) => void;
+  isClient: boolean;
 }
 
-const NewClientFields = ({onAction}: Props) => {
+const NewClientFields = ({ onAction, isClient }: Props) => {
   return (
     <div>
       <div className="inputGroup">
@@ -16,7 +15,6 @@ const NewClientFields = ({onAction}: Props) => {
           <input
             type="text"
             name="firstName"
-            
             className="inputBar"
             onChange={(e) => onAction(e)}
             required
@@ -49,6 +47,36 @@ const NewClientFields = ({onAction}: Props) => {
           />
         </label>
       </div>
+      {isClient ? (
+        <div>
+          <div className="inputGroup">
+            <label className="inputLabel">
+              Email <br></br>
+              <input
+                type="text"
+                name="email"
+                className="inputBar"
+                onChange={(e) => onAction(e)}
+                required
+              />
+            </label>
+          </div>
+          <div className="inputGroup">
+            <label className="inputLabel">
+              Address <br></br>
+              <input
+                type="text"
+                name="address"
+                className="inputBar"
+                onChange={(e) => onAction(e)}
+                required
+              />
+            </label>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
