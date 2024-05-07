@@ -117,11 +117,6 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
   // * pageNumberNav component is included below the table to allow for switching of pages
   return (
     <div className={style.tableContainer}>
-      {errorMessage && (
-        <div className={style.errorMessage}>
-          Error: There are no clients associated with this user.
-        </div>
-      )}
       <div className={style.tableHeaderRow}>
         <p className={style.infoTitle}>Head of Household</p>
         <p className={style.infoTitle}>Phone Number</p>
@@ -137,6 +132,11 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
           lastVisit={client.lastVisit} // need to fix and calculate
         />
       ))}
+      {errorMessage && (
+        <div className={style.errorMessage}>
+          Error: There are no clients associated with this user.
+        </div>
+      )}
       <PageNumberNav numPages={numPages} />
     </div>
   );

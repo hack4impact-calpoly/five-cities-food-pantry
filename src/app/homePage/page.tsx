@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState(""); // * holds the current query
   const [clientList, setClientList] = useState<ClientInfo[]>([]); // State to hold the list of clients
+  const [errorMessage, setErrorMessage] = useState(false);
 
   useEffect(() => {
     // * makes a GET request for all of the clients in the database
@@ -36,7 +37,8 @@ export default function HomePage() {
   }, []); // empty dependency array makes effect run once on mount
 
   // * runs when user submits a search bar request
-  const handleSearch = () => {
+  const handleSearch = (event: any) => {
+    event.preventDefault();
     console.log("Searching for: ", searchQuery);
   };
 
@@ -46,6 +48,11 @@ export default function HomePage() {
     client.phoneNumber.trim().includes(searchQuery.trim()) ||
     client.address.toLowerCase().trim().includes(searchQuery.toLowerCase().trim())
   );
+
+  useEffect(() => {
+    const isNoMatch = !!searchQuery && filteredClients.length === 0;
+    setErrorMessage(isNoMatch);
+  }, [filteredClients, searchQuery]);
   
   // * home page main container holds the client search header, add new client button, and search bar,
   // * information table is rendered by calling the clientInformationTable component
@@ -76,10 +83,14 @@ export default function HomePage() {
                   </svg>
                 </button>
               </form>
+              {errorMessage && (
+                <div className={style.errorMessage}>
+                  Error: There are no clients associated with this user.
+                </div>
+              )}
             </div>
           </div>
         </div>
-
         <ClientInformationTable clients={filteredClients} />
       </div>
     </>
