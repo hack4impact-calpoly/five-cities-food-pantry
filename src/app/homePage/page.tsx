@@ -5,14 +5,6 @@ import ClientInformationTable from "../components/clientInformationTable";
 import { ClientInfo } from "../components/clientInformationTable";
 import { useState, useEffect } from "react";
 
-// * Used to generate dummy list of clients, will be removed when retrieving clientlist from db
-// const clientList = Array.from({ length: 62 }, (_, i) => ({
-//   headOfHousehold: `Client ${i + 1}`,
-//   phone: "111 - 111 - 1111",
-//   address: "123 Grand Ave",
-//   lastVisit: "4/22/2024",
-// }));
-
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState(""); // * holds the current query
   const [clientList, setClientList] = useState<ClientInfo[]>([]); // State to hold the list of clients
@@ -48,6 +40,13 @@ export default function HomePage() {
     console.log("Searching for: ", searchQuery);
   };
 
+  const filteredClients = clientList.filter(client =>
+    client.firstName.toLowerCase().trim().includes(searchQuery.toLowerCase().trim()) ||
+    client.lastName.toLowerCase().trim().includes(searchQuery.toLowerCase().trim()) ||
+    client.phoneNumber.trim().includes(searchQuery.trim()) ||
+    client.address.toLowerCase().trim().includes(searchQuery.toLowerCase().trim())
+  );
+  
   // * home page main container holds the client search header, add new client button, and search bar,
   // * information table is rendered by calling the clientInformationTable component
   return (
@@ -81,7 +80,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <ClientInformationTable clients={clientList} />
+        <ClientInformationTable clients={filteredClients} />
       </div>
     </>
   );
