@@ -9,6 +9,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState(""); // * holds the current query
   const [clientList, setClientList] = useState<ClientInfo[]>([]); // State to hold the list of clients
   const [errorMessage, setErrorMessage] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     // * makes a GET request for all of the clients in the database
@@ -39,6 +40,7 @@ export default function HomePage() {
   // * runs when user submits a search bar request
   const handleSearch = (event: any) => {
     event.preventDefault();
+    setCurrentPage(1);
     console.log("Searching for: ", searchQuery);
   };
 
@@ -52,6 +54,7 @@ export default function HomePage() {
   useEffect(() => {
     const isNoMatch = !!searchQuery && filteredClients.length === 0;
     setErrorMessage(isNoMatch);
+    if (searchQuery) setCurrentPage(1);
   }, [filteredClients, searchQuery]);
   
   // * home page main container holds the client search header, add new client button, and search bar,
@@ -85,7 +88,7 @@ export default function HomePage() {
               </form>
               {errorMessage && (
                 <div className={style.errorMessage}>
-                  Error: There are no clients associated with this user.
+                  Error: There are no clients that fit the parameters of your search.
                 </div>
               )}
             </div>
