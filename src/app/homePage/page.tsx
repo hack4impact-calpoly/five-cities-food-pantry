@@ -5,17 +5,11 @@ import ClientInformationTable from "../components/clientInformationTable";
 import { ClientInfo } from "../components/clientInformationTable";
 import { useState, useEffect } from "react";
 
-// * Used to generate dummy list of clients, will be removed when retrieving clientlist from db
-// const clientList = Array.from({ length: 62 }, (_, i) => ({
-//   headOfHousehold: `Client ${i + 1}`,
-//   phone: "111 - 111 - 1111",
-//   address: "123 Grand Ave",
-//   lastVisit: "4/22/2024",
-// }));
-
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState(""); // * holds the current query
   const [clientList, setClientList] = useState<ClientInfo[]>([]); // State to hold the list of clients
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     // * makes a GET request for all of the clients in the database
@@ -44,10 +38,25 @@ export default function HomePage() {
   }, []); // empty dependency array makes effect run once on mount
 
   // * runs when user submits a search bar request
-  const handleSearch = () => {
+  const handleSearch = (event: any) => {
+    event.preventDefault();
+    setCurrentPage(1);
     console.log("Searching for: ", searchQuery);
   };
 
+  const filteredClients = clientList.filter(client =>
+    client.firstName.toLowerCase().trim().includes(searchQuery.toLowerCase().trim()) ||
+    client.lastName.toLowerCase().trim().includes(searchQuery.toLowerCase().trim()) ||
+    client.phoneNumber.trim().includes(searchQuery.trim()) ||
+    client.address.toLowerCase().trim().includes(searchQuery.toLowerCase().trim())
+  );
+
+  useEffect(() => {
+    const isNoMatch = !!searchQuery && filteredClients.length === 0;
+    setErrorMessage(isNoMatch);
+    if (searchQuery) setCurrentPage(1);
+  }, [filteredClients, searchQuery]);
+  
   // * home page main container holds the client search header, add new client button, and search bar,
   // * information table is rendered by calling the clientInformationTable component
   return (
@@ -77,11 +86,15 @@ export default function HomePage() {
                   </svg>
                 </button>
               </form>
+              {errorMessage && (
+                <div className={style.errorMessage}>
+                  Error: There are no clients that fit the parameters of your search.
+                </div>
+              )}
             </div>
           </div>
         </div>
-
-        <ClientInformationTable clients={clientList} />
+        <ClientInformationTable clients={filteredClients} />
       </div>
     </>
   );

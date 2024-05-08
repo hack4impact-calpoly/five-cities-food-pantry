@@ -74,7 +74,7 @@ export default function Login() {
 
       if (response.ok) {
         // * successful login, navigate to home page and display success message
-        router.push("/clientPage"); // navigates user to this path, also need to pass profile object?
+        router.push("/homePage"); // navigates user to this path, also need to pass profile object?
       } else {
         // * means the password did not match, or the email did not exist, show error message
         setErrorMessageContent(
