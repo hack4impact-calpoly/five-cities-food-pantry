@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../database/db";
 import IUserSchema from "../../../database/userSchema";
+import bcrypt from "bcrypt";
 
 // expected request body
 interface SignupRequestBody {
@@ -35,10 +36,12 @@ export async function POST(req: NextRequest) {
     // * user does not exist, therefore creates a document with the user's information
     // ! NOTE: PASSWORD HASHING MUST OCCUR HERE.
     if (!user) {
+      const salt = await bcrypt.genSalt(10); // Generate salt
+      const hashedPassword = await bcrypt.hash(password, salt); 
       // User does not exist, create a document with the user's information
       const newUser = await IUserSchema.create({
         email: email,
-        password: password,
+        password: hashedPassword,
         firstname: firstname,
         lastname: lastname,
       });
