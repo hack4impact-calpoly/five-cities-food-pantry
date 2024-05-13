@@ -11,6 +11,7 @@ interface iClient extends Document {
   authMem: Types.ObjectId[];
   householdMem: Types.ObjectId[];
   isFlagged: boolean;
+  isChecked: boolean;
 }
 
 // used in validation for the date attribute of the client schema
@@ -97,6 +98,10 @@ const ClientSchema = new Schema<iClient>({
     },
   ],
   isFlagged: {
+    type: Boolean,
+    required: true,
+  },
+  isChecked: {
     type: Boolean,
     required: true,
   },
