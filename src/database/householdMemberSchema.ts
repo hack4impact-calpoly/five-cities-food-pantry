@@ -28,7 +28,7 @@ const HouseholdMemberSchema = new Schema<IHouseholdMember>({
   },
   current: {
     type: Boolean,
-    required: false,
+    required: true,
   },
   headHousehold: {
     type: Schema.Types.ObjectId,
