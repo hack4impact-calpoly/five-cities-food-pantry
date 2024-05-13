@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-interface iClient extends Document {
+export interface iClient extends Document {
   firstName: string;
   lastName: string;
   birthDate: Date;
@@ -8,8 +8,9 @@ interface iClient extends Document {
   phoneNumber: string;
   email: string;
   address: string;
-  authMem: Types.ObjectId[];
-  householdMem: Types.ObjectId[];
+  authMem: [];
+  householdMem: [];
+  notes: [];
   isFlagged: boolean;
   isChecked: boolean;
 }
@@ -89,6 +90,12 @@ const ClientSchema = new Schema<iClient>({
     {
       type: Schema.Types.ObjectId,
       ref: "AuthorizedMember", // references the AuthorizedMember model (that's exported within the AuthorizedMember file)
+    },
+  ],
+  notes: [
+    {
+      type: String,
+      required: true,
     },
   ],
   householdMem: [
