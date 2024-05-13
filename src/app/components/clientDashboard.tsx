@@ -1,5 +1,6 @@
 import React from "react";
-import "./clientDashboard.css"; 
+import "./clientDashboard.css";
+import iClient from "../../database/clientSchema";
 
 interface HouseholdMember {
   name: string;
@@ -15,6 +16,10 @@ interface Client {
   householdMembers: HouseholdMember[];
   lastVisitDates: string[];
   notes: string[];
+}
+
+interface ClientDashboardProps {
+  client: iClient; // Assuming iClient is the correct type for the client object
 }
 
 const client: Client = {
@@ -48,7 +53,8 @@ const client: Client = {
   notes: ["received gift card"],
 };
 
-const ClientDashboard = () => {
+const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
+  console.log("Client Passed into Client Dashboard: ", client);
   return (
     <div className="client-profile">
       <div className="top-bar-button">
