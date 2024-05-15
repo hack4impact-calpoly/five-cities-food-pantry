@@ -32,6 +32,7 @@ function calculateAge(birthDate: Date): string {
 }
 
 const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
+  console.log("client auth mem: ", client.authMem);
   return (
     <div className="client-profile">
       <div className="top-bar-button">
@@ -119,20 +120,24 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
               <h3 className="details-header">Authorized Pickup</h3>
             </div>
           </div>
-          {client.authorizedPickup ? (
-            client.authorizedPickup.map((member, index) => (
+          {client.authMem ? (
+            client.authMem.map((member, index) => (
               <div key={index} className="table-row">
                 <div className="members">
                   <p className="details-content">
                     {member.current ? ( // Check if the member has the 'current' attribute
-                      <span className="bolded">{member.name}</span>
+                      <span className="bolded">
+                        `${member.firstName} ${member.lastName}`
+                      </span>
                     ) : (
-                      member.name // Render the name without bold styling if 'current' attribute is not present
+                      `${member.firstName} ${member.lastName}` // Render the name without bold styling if 'current' attribute is not present
                     )}
                   </p>
                 </div>
                 <div className="age">
-                  <p className="details-content">{member.age}</p>
+                  <p className="details-content">
+                    {calculateAge(member.birthDate)}
+                  </p>
                 </div>
                 <div className="phone-number">
                   <p className="details-content">{member.phone}</p>

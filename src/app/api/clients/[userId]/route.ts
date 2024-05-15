@@ -16,14 +16,15 @@ export async function GET(req: NextRequest, { params }: IParams) {
     await connectDB();
     // ! This declaration fixes error of HouseholdMember Schema not found
     var HouseholdMember = require("../../../../database/householdMemberSchema");
+    var AuthorizedMember = require("../../../../database/authorizedMemberSchema");
 
     //takes the userId from the URL path
     const { userId } = params;
 
     // Fetching single client using userId from params
-    const client = await IClientSchema.findOne({ _id: userId }).populate(
-      "householdMem"
-    );
+    const client = await IClientSchema.findOne({ _id: userId })
+      .populate("householdMem")
+      .populate("authMem");
 
     // If the client is not found, return a 404 response
     if (!client) {
