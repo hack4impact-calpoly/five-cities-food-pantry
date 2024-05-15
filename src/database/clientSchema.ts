@@ -15,21 +15,29 @@ export interface iClient extends Document {
   isChecked: boolean;
 }
 
-// used in validation for the date attribute of the client schema
-const calculateAge = (birthDate: Date) => {
-  const today = new Date();
-  const birthDateObj = new Date(birthDate);
-
-  let age = today.getFullYear() - birthDateObj.getFullYear();
-  const m = today.getMonth() - birthDateObj.getMonth();
-
-  //decrease age by 1 if it has not yet occurred this year
-  if (m < 0 || (m === 0 && today.getDate() < birthDateObj.getDate())) {
-    age--;
+/**
+ * Calculates the age based on the provided birthdate.
+ * @param {Date} birthDate - The birthdate of the client.
+ * @returns {number} The age of the client in years.
+ */
+function calculateAge(birthDate: Date): number {
+  if (typeof birthDate === "string") {
+    birthDate = new Date(birthDate);
   }
 
+  const today: Date = new Date();
+  let age: number = today.getFullYear() - birthDate.getFullYear();
+  const monthDifference: number = today.getMonth() - birthDate.getMonth();
+
+  // Check if the birthdate has not occurred yet this year
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
   return age;
-};
+}
 
 const ClientSchema = new Schema<iClient>({
   firstName: {
@@ -100,7 +108,7 @@ const ClientSchema = new Schema<iClient>({
   ],
   householdMem: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.ObjectId,
       ref: "HouseholdMember", // references the AuthorizedMember model (that's exported within the householdMember file)
     },
   ],

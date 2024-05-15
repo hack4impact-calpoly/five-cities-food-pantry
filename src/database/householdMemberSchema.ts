@@ -37,9 +37,17 @@ const HouseholdMemberSchema = new Schema<IHouseholdMember>({
   },
 });
 
-export default mongoose.models.HouseholdMember ||
+const HouseholdMember =
+  mongoose.models.HouseholdMember ||
   mongoose.model<IHouseholdMember>(
     "HouseholdMember",
     HouseholdMemberSchema,
     "householdMember"
   );
+
+console.log(
+  "Registered Models after defining HouseholdMember:",
+  mongoose.models
+);
+
+export default HouseholdMember;

@@ -1,7 +1,10 @@
-import Navbar from "../components/Navbar";
-import ClientDashboard from "../components/clientDashboard";
+"use client";
+import Navbar from "../../components/Navbar";
+import ClientDashboard from "../../components/clientDashboard";
 import { useState, useEffect } from "react";
-import iClient from "../../database/clientSchema";
+import iClient from "../../../database/clientSchema";
+
+// * why does this iClient import not work?
 
 type IParams = {
   params: {
@@ -10,11 +13,13 @@ type IParams = {
 };
 
 const emptyClient: iClient = {
-  _id: new mongoose.Types.ObjectId(), // a new unique identifier
+  _id: {
+    $oid: "66300541a7100c9f91c81f90",
+  },
   firstName: "",
   lastName: "",
-  birthDate: new Date(), // use current date as default or set a specific date
-  entryDates: [],
+  birthDate: "",
+  entryDates: [""],
   phoneNumber: "",
   email: "",
   address: "",
@@ -22,33 +27,31 @@ const emptyClient: iClient = {
   householdMem: [],
   isFlagged: false,
   isChecked: false,
+  notes: [],
 };
 
 export default function ClientPage({ params }: IParams) {
   // * defaults to an empty client to avoid errors
-  const [clientInformation, setClientInformation] =
-    useState<iClient>(emptyClient);
+  const [clientInformation, setClientInformation] = useState(emptyClient);
 
-  //takes the userId from the URL path
+  // takes the userId from the URL path
   const { userId } = params;
 
   useEffect(() => {
-    // * makes a GET request for the specific client based on slug ID
     const getSpecificClientFromDatabase = async () => {
       try {
-        const response = await fetch("/api/clients", {
+        const response = await fetch(`/api/clients/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
         });
         const data = await response.json();
-        console.log("Fetched client:", data);
         if (response.ok) {
+          console.log("Successfully fetched client data:", data);
           setClientInformation(data); // Set the client list if fetch is successful
         } else {
           console.error("Failed to fetch clients");
-          setClientInformation(iClient);
         }
       } catch (error) {
         console.error("Error fetching clients:", error);
@@ -56,7 +59,7 @@ export default function ClientPage({ params }: IParams) {
     };
 
     getSpecificClientFromDatabase();
-  }, []); // empty dependency array makes effect run once on mount
+  }, [userId]);
 
   return (
     <>
