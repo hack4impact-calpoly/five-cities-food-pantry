@@ -12,7 +12,7 @@ export interface iClient extends Document {
   householdMem: [];
   notes: [];
   isFlagged: boolean;
-  isChecked: boolean;
+  isCheckedOff: boolean;
 }
 
 /**
@@ -116,7 +116,7 @@ const ClientSchema = new Schema<iClient>({
     type: Boolean,
     required: true,
   },
-  isChecked: {
+  isCheckedOff: {
     type: Boolean,
     required: true,
   },

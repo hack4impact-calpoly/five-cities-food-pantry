@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./clientDashboard.css";
 import iClient from "../../database/clientSchema";
 import HouseholdMember from "../../database/householdMemberSchema";
@@ -32,41 +32,143 @@ function calculateAge(birthDate: Date): string {
 }
 
 const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
-  const [checkedInState, setCheckedInState] = useState(false);
+  const [checkedInState, setCheckedInState] = useState(client.isCheckedOff);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  // * for actions related to the checkin Button
-  const checkInUser: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-    console.log("check in user button clicked");
+  // Update the checkedInState when the component mounts
+  useEffect(() => {
+    console.log(
+      "client.checkedInState on load, setting checkedInState to this value: ",
+      client.isCheckedOff
+    );
+    setCheckedInState(client.isCheckedOff);
+  }, [client.isCheckedOff]);
 
+  /**
+   * Fired when the user clicks on the "Check In" or "Checked In" buttons.
+   *
+   * @param event : the button submit event
+   *
+   * If the user clicks the button when the checkedInState is false, this function:
+   * 1. calls the appropriate function to make a PUT request to the database, updating the "isCheckedOff" state of the current client to "true".
+   * 2. If the call is successful (meaning the db state is updated), then update the local state within this component.
+   * 3. If the call is not successful, display an error message
+   *
+   * If the user clicks when the checkedInState is true, this function:
+   * 1. will trigger the dialog/modal popup to appear to prompt the user to confirm their choice of checking out the user.
+   *
+   *
+   */
+  const checkInUser: React.MouseEventHandler<HTMLButtonElement> = async (
+    event
+  ) => {
+    console.log("checkedInUser called because user clicked check in button");
     if (checkedInState) {
-      console.log("user currently checked in, executing check out flow");
       setIsDialogOpen(true);
     }
 
     if (!checkedInState) {
-      console.log("user not checked in, checking in");
-      // * if not checked in: post to client updating the checkedIn to true, set success/error banner, update button text "Checked In"
-      setCheckedInState(!checkedInState);
+      const isSuccess = await updateClientIsCheckedStateInDatabase(true);
+
+      if (isSuccess) {
+        console.log("user successfully checked in, updating the state locally");
+        // * if successfully checked in
+        setCheckedInState(true);
+      } else {
+        console.log("There was an error when checking the user in");
+        // TODO : error message
+      }
     }
   };
 
-  // * for actions related to the dialog popup;
-  const handleDialogConfirmCheckout = () => {
-    console.log("user confirmed check out");
-    // Post to client updating the checkedIn to false, set success/error banner, update button text to "Check In"
-    setCheckedInState(false);
-    setIsDialogOpen(false);
+  /**
+   * Updates the client's "isCheckedOff" state in the database via a PUT request.
+   *
+   * @param {boolean} clientState - The new state to update the client's "isCheckedOff" attribute to.
+   * @returns {Promise<boolean>} - Returns a boolean indicating whether the update was successful.
+   *
+   * This function:
+   * 1. Sends a PUT request to the backend to update the "isCheckedOff" attribute of the client document.
+   * 2. If the update is successful, sets the local state `checkedInState` to the provided `clientState`.
+   * 3. Returns `true` if the update was successful, and `false` otherwise.
+   *
+   * Note: Error messages should not be displayed directly from this function. Instead, the boolean promise returned
+   * can be used by the calling functions to handle success or error scenarios appropriately.
+   */
+  const updateClientIsCheckedStateInDatabase = async (
+    clientState: boolean
+  ): Promise<boolean> => {
+    try {
+      const response = await fetch(`/api/clients/check-in/${client._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isCheckedOff: clientState }),
+      });
+
+      if (response.ok) {
+        console.log(
+          "the user was checked in or out successfully from the database!, now updating the local client state"
+        );
+        const result = await response.json();
+        setCheckedInState(clientState);
+        return true; // Indicate success
+      } else {
+        console.error("Check-in failed:", response.statusText);
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      return false; // Indicate failure
+    }
   };
 
-  // * for actions related to the dialog popup
+  /**
+   * Handles the confirmation of checking out the client from the modal popup.
+   *
+   * This function:
+   * 1. Calls `updateClientIsCheckedStateInDatabase` to update the 'isCheckedOff' state in the database.
+   * 2. If the update is successful, updates the local `checkedInState` to `false` and closes the dialog.
+   * 3. If the update fails, does not change the local state and is intended to display an error message (to be implemented).
+   *
+   */
+  const handleDialogConfirmCheckout = async () => {
+    // Post to client updating the checkedIn to false, set success/error banner, update button text to "Check In"
+    const isSuccess = await updateClientIsCheckedStateInDatabase(false);
+
+    // * if user is successfully checked out, update state to be 'checked out' locally
+    if (isSuccess) {
+      console.log("client checked out successfully");
+      setCheckedInState(false);
+      setIsDialogOpen(false);
+    } else {
+      // TODO : Display error message
+    }
+  };
+
+  /**
+   * Handles the cancellation of checking out the client from the modal popup.
+   *
+   * This function:
+   * 1. Closes the dialog/modal popup.
+   * 2. Does not update any states.
+   *
+   */
   const handleDialogCancelCheckout = () => {
-    console.log("user cancelled check out");
+    console.log("checkout cancelled, dialog box closed");
     setIsDialogOpen(false);
   };
 
   return (
     <div className="client-profile">
+      {checkedInState && (
+        <div className="checkedInBanner">
+          <p>
+            {`${client.firstName} ${client.lastName}`} is currently checked in
+          </p>
+        </div>
+      )}
       {isDialogOpen && (
         <div className="dialog">
           <div className="dialog-modal">
@@ -109,7 +211,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
           </div>
           {checkedInState ? (
             <button onClick={checkInUser} className="check-in backgroundGreen">
-              Check Out
+              Checked In
             </button>
           ) : (
             <button onClick={checkInUser} className="check-in">
