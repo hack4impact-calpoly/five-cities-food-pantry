@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./clientDashboard.css";
 import iClient from "../../database/clientSchema";
 import HouseholdMember from "../../database/householdMemberSchema";
@@ -32,9 +32,67 @@ function calculateAge(birthDate: Date): string {
 }
 
 const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
-  console.log("client auth mem: ", client.authMem);
+  const [checkedInState, setCheckedInState] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // * for actions related to the checkin Button
+  const checkInUser: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    console.log("check in user button clicked");
+
+    if (checkedInState) {
+      console.log("user currently checked in, executing check out flow");
+      setIsDialogOpen(true);
+    }
+
+    if (!checkedInState) {
+      console.log("user not checked in, checking in");
+      // * if not checked in: post to client updating the checkedIn to true, set success/error banner, update button text "Checked In"
+      setCheckedInState(!checkedInState);
+    }
+  };
+
+  // * for actions related to the dialog popup;
+  const handleDialogConfirmCheckout = () => {
+    console.log("user confirmed check out");
+    // Post to client updating the checkedIn to false, set success/error banner, update button text to "Check In"
+    setCheckedInState(false);
+    setIsDialogOpen(false);
+  };
+
+  // * for actions related to the dialog popup
+  const handleDialogCancelCheckout = () => {
+    console.log("user cancelled check out");
+    setIsDialogOpen(false);
+  };
+
   return (
     <div className="client-profile">
+      {isDialogOpen && (
+        <div className="dialog">
+          <div className="dialog-modal">
+            <h3 className="confirmMessage">Please Confirm.</h3>
+            <p>
+              Are you sure you want to check <br></br>
+              <span className="bolded">{`${client.firstName} ${client.lastName}`}</span>{" "}
+              out?
+            </p>
+            <div className="buttonsHolder">
+              <button
+                className="dialogButton checkOutUser"
+                onClick={handleDialogConfirmCheckout}
+              >
+                Check Client Out
+              </button>
+              <button
+                className="dialogButton cancelCheckOutUser"
+                onClick={handleDialogCancelCheckout}
+              >
+                Don&apos;t Check Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="top-bar-button">
         <button className="back-button">← Back</button>
       </div>
@@ -49,7 +107,15 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
               <use href="/user-icons.svg#icon-pencil" />
             </svg>
           </div>
-          <button className="check-in">Check In</button>
+          {checkedInState ? (
+            <button onClick={checkInUser} className="check-in backgroundGreen">
+              Check Out
+            </button>
+          ) : (
+            <button onClick={checkInUser} className="check-in">
+              Check In
+            </button>
+          )}
         </div>
         <div className="client-information">
           {/* Table-Header holds the row with the table titles: members, age, phone #, address */}
