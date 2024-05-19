@@ -35,7 +35,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
         { status: 404 }
       );
     }
-
+    console.log("Success", client);
     return NextResponse.json(client);
   } catch (err) {
     console.error("Error updating client:", err);

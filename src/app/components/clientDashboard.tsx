@@ -31,6 +31,15 @@ function calculateAge(birthDate: Date): string {
   return age.toString();
 }
 
+/**
+ * Formats a date string to "YYYY-MM-DD" format, removing the time portion.
+ * @param {string} dateStr - The date string in ISO format.
+ * @returns {string} The formatted date string.
+ */
+function formatDateString(dateStr: string): string {
+  return dateStr.split('T')[0];
+}
+
 const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
   const [checkedInState, setCheckedInState] = useState(client.isCheckedOff);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -325,7 +334,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
             <div className="history-content">
               {client.entryDates.map((date, index) => (
                 <p key={index} className="visit-date">
-                  {date}
+                  {formatDateString(date)}
                 </p>
               ))}
             </div>

@@ -22,7 +22,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
     const { userId } = params;
 
     // Fetching single client using userId from params
-    const client = await IClientSchema.findOne({ _id: userId })
+    const client: any  = await IClientSchema.findOne({ _id: userId })
       .populate("householdMem")
       .populate("authMem");
 
