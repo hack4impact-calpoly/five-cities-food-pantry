@@ -19,6 +19,19 @@ interface AuthMem {
   client: string;
 }
 
+interface FormData {
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  entryDates: Date[];
+  authMem: string[];
+  householdMem: string[];
+  phoneNumber: string;
+  email: string;
+  address: string;
+  isFlagged: boolean;
+}
+
 export default function AddNewClient() {
   const [selectedValue, setSelectedValue] = useState(false);
   const [numChildren, setNumChildren] = useState(0);
@@ -31,7 +44,7 @@ export default function AddNewClient() {
     client: "",
   });
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
     birthDate: "",
@@ -124,11 +137,6 @@ export default function AddNewClient() {
         fetchMembers(headClientId);
       })
       .catch((err) => console.log(err));
-
-    // update household members headhousehold and
-    // save household members to household mem database
-
-    //console.log(formData);
   };
 
   const fetchMembers = (headClientId: string) => {
@@ -136,7 +144,7 @@ export default function AddNewClient() {
     if (householdMem.length !== 0) {
       
       householdMem.map((mem) => (mem.headHousehold = headClientId));
-      console.log(householdMem);
+      //console.log(householdMem);
 
       fetch("/api/householdMembers", {
         method: "POST",
@@ -148,10 +156,22 @@ export default function AddNewClient() {
         .then((response) => {
           return response.json();
         })
-        .then((data) => console.log(data))
+        .then((data) => {
+          const mems: string[] = [];
+          //console.log(data);
+          data.message.map((mem: any) => {
+            //console.log(mem._id);
+            mems.push(mem._id);
+          })
+          setFormData((prevFormData) => ({...prevFormData, householdMem: mems}))
+        })
         .catch((err) => console.log(err));
     }
   };
+
+  const updateClientHousehold = () => {
+
+  }
 
   const handleRadioChange = () => {
     setSelectedValue(!selectedValue);
