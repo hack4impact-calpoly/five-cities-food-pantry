@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../database/db";
-import HouseholdMember, {IHouseholdMember} from "../../../database/householdMemberSchema";
+import HouseholdMember from "../../../database/householdMemberSchema";
 
 export async function GET(req: NextRequest) {
   try {
@@ -42,26 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await HouseholdMember.insertMany(members);
-
-    return NextResponse.json(
-      { message: result},
-      {status: 200}
-
-    )
-
-    
-    // const newMemberData = await req.json();
-
-    // //create a new client using the data in body
-    // const newMember = new IHouseholdMember(newMemberData);
-    // console.log(newMember);
-
-    // //save the new client to the database
-    // await newMember.save();
-    // return NextResponse.json(
-    //   { message: "Operation successful" },
-    //   { status: 200 }
-    // );
+    return NextResponse.json({ message: result }, { status: 200 });
   } catch (err) {
     //if unable to add client, return error
     console.log("Error adding members:", err);

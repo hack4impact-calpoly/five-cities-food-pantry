@@ -37,7 +37,7 @@ export default function AddNewClient() {
   const [numChildren, setNumChildren] = useState(0);
   const [numAdults, setNumAdults] = useState(1);
   const [householdMem, setHouseholdMem] = useState<Member[]>([]);
-  const [authMem, setAuthMem] = useState({
+  const [authMem, setAuthMem] = useState<AuthMem>({
     firstName: "",
     lastName: "",
     birthDate: "",
@@ -115,10 +115,14 @@ export default function AddNewClient() {
     });
   }, [numChildren, numAdults]);
 
+  // when form is submitted:
+  // 1. client is posted to db, its mongodb-geenrated id is then added to the householdMem array
+  // 2. householdMembers are posted to db, their mongodb-generated id's are returned and stored
+  // 3. the client is updated to hold the ids of their householdMembers
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     let headClientId: string;
     e.preventDefault();
-    // TODO: save client and retrieve client id
+
     fetch("/api/clients", {
       method: "POST",
       headers: {
@@ -131,15 +135,18 @@ export default function AddNewClient() {
       })
       .then((data) => {
         headClientId = data.message;
-        console.log(headClientId);
+        //console.log(headClientId);
       })
       .then(() => {
-        fetchMembers(headClientId);
+        postMembers(headClientId);
+      })
+      .then(() => {
+        postAuthMembers(headClientId);
       })
       .catch((err) => console.log(err));
   };
 
-  const fetchMembers = (headClientId: string) => {
+  const postMembers = (headClientId: string) => {
     if (householdMem.length !== 0) {
       householdMem.map((mem) => (mem.headHousehold = headClientId));
 
@@ -156,15 +163,11 @@ export default function AddNewClient() {
         .then((data) => {
           const mems: string[] = [];
           data.message.map((mem: any) => {
-            console.log(mem._id);
+            //console.log(mem._id);
             mems.push(mem._id);
           });
 
           updateClientHousehold(mems, headClientId);
-          // setFormData((prevFormData) => ({
-          //   ...prevFormData,
-          //   householdMem: mems,
-          // }));
         })
         .catch((err) => console.log(err));
     }
@@ -180,9 +183,28 @@ export default function AddNewClient() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("updated client: ", data);
+        // log to console for testing purposes
+        console.log("client posted: ", data);
       })
       .catch((err) => console.log(err));
+  };
+
+  const postAuthMembers = (clientId: string) => {
+    if (selectedValue) {
+      authMem.client = clientId;
+      fetch("/api/authorizedMembers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(authMem),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("auth mem: ", data.message);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const handleRadioChange = () => {

@@ -60,6 +60,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   }
 }
 
+// update a client's household members 
 export async function PUT(req: NextRequest, { params }: IParams) {
   await connectDB();
   const { userId } = params;
@@ -72,13 +73,12 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       { householdMem },
       { new: true }
     );
-
+    
     if (!updatedClient) {
       return NextResponse.json({ error: "Client not found." }, { status: 404 });
     }
 
     return NextResponse.json(updatedClient, { status: 200 });
-
   } catch (err) {
     console.error("Error updating client:", err);
     return NextResponse.json(
