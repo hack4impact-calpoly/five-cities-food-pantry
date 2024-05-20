@@ -37,12 +37,13 @@ export async function POST(req: NextRequest) {
 
     //create a new client using the data in body
     const newClient = new IClientSchema(newClientData);
-    console.log(newClient);
 
     //save the new client to the database
     await newClient.save();
+    console.log(newClient._id.valueOf());
+    
     return NextResponse.json(
-      { message: "Operation successful" },
+      { message: newClient._id.valueOf() },
       { status: 200 }
     );
   } catch (err) {

@@ -41,6 +41,7 @@ export default function AddNewClient() {
     phoneNumber: "",
     email: "",
     address: "",
+    isFlagged: false,
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +77,7 @@ export default function AddNewClient() {
   useEffect(() => {
     setHouseholdMem((prev) => {
       let children = prev.filter((mem) => !mem.isAdult).slice(0, numChildren);
-      let adults = prev.filter((mem) => mem.isAdult).slice(0, numAdults);
+      let adults = prev.filter((mem) => mem.isAdult).slice(0, numAdults - 1);
 
       while (children.length < numChildren) {
         children.push({
@@ -102,21 +103,54 @@ export default function AddNewClient() {
   }, [numChildren, numAdults]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    let headClientId: string;
     e.preventDefault();
     // TODO: save client and retrieve client id
-
-    // save household members to household mem database
-    fetch("/api/householdMembers", {
+    fetch("/api/clients", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ members: householdMem }),
+      body: JSON.stringify(formData),
     })
-      .then((response) => console.log(response))
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        headClientId = data.message;
+        console.log(headClientId);
+      })
+      .then(() => {
+        fetchMembers(headClientId);
+      })
       .catch((err) => console.log(err));
 
+    // update household members headhousehold and
+    // save household members to household mem database
+
     //console.log(formData);
+  };
+
+  const fetchMembers = (headClientId: string) => {
+    
+    if (householdMem.length !== 0) {
+      
+      householdMem.map((mem) => (mem.headHousehold = headClientId));
+      console.log(householdMem);
+
+      fetch("/api/householdMembers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ members: householdMem }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
+    }
   };
 
   const handleRadioChange = () => {

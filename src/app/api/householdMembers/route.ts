@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     const result = await HouseholdMember.insertMany(members);
 
     return NextResponse.json(
-      { message: "Successfully added members."},
+      { message: result},
       {status: 200}
 
     )
