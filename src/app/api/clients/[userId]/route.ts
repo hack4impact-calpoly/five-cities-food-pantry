@@ -41,20 +41,49 @@ export async function GET(req: NextRequest, { params }: IParams) {
 export async function DELETE(req: NextRequest, { params }: IParams) {
   await connectDB();
   const { userId } = params;
-  
+
   try {
     //find the client to delete by the given id
     const client = await IClientSchema.findOne({ _id: userId });
-    await IClientSchema.findByIdAndDelete(client._id); 
-    return NextResponse.json({ message: 'Operation successful' }, { status: 200 });
-  }
-  //return an error if unable to delete the client
-  catch(err) {
+    await IClientSchema.findByIdAndDelete(client._id);
+    return NextResponse.json(
+      { message: "Operation successful" },
+      { status: 200 }
+    );
+  } catch (err) {
+    //return an error if unable to delete the client
     console.error("Error deleting client:", err);
     return NextResponse.json(
       { error: "Error deleting client." },
-      { status: 500}
+      { status: 500 }
     );
   }
 }
 
+export async function PUT(req: NextRequest, { params }: IParams) {
+  await connectDB();
+  const { userId } = params;
+  try {
+    const body = await req.json();
+    const { householdMem } = body;
+
+    const updatedClient = await IClientSchema.findByIdAndUpdate(
+      userId,
+      { householdMem },
+      { new: true }
+    );
+
+    if (!updatedClient) {
+      return NextResponse.json({ error: "Client not found." }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedClient, { status: 200 });
+
+  } catch (err) {
+    console.error("Error updating client:", err);
+    return NextResponse.json(
+      { error: "Error updating client." },
+      { status: 500 }
+    );
+  }
+}

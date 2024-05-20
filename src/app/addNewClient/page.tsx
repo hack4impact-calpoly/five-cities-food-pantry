@@ -140,11 +140,8 @@ export default function AddNewClient() {
   };
 
   const fetchMembers = (headClientId: string) => {
-    
     if (householdMem.length !== 0) {
-      
       householdMem.map((mem) => (mem.headHousehold = headClientId));
-      //console.log(householdMem);
 
       fetch("/api/householdMembers", {
         method: "POST",
@@ -158,20 +155,35 @@ export default function AddNewClient() {
         })
         .then((data) => {
           const mems: string[] = [];
-          //console.log(data);
           data.message.map((mem: any) => {
-            //console.log(mem._id);
+            console.log(mem._id);
             mems.push(mem._id);
-          })
-          setFormData((prevFormData) => ({...prevFormData, householdMem: mems}))
+          });
+
+          updateClientHousehold(mems, headClientId);
+          // setFormData((prevFormData) => ({
+          //   ...prevFormData,
+          //   householdMem: mems,
+          // }));
         })
         .catch((err) => console.log(err));
     }
   };
 
-  const updateClientHousehold = () => {
-
-  }
+  const updateClientHousehold = (mems: string[], clientId: string) => {
+    fetch(`/api/clients/${clientId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ householdMem: mems }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("updated client: ", data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleRadioChange = () => {
     setSelectedValue(!selectedValue);
