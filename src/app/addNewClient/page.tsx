@@ -60,7 +60,7 @@ export default function AddNewClient() {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
-    console.log(formData);
+    //console.log(formData);
   };
 
   const handleMemChange = (
@@ -78,13 +78,13 @@ export default function AddNewClient() {
       })
     );
 
-    console.log(householdMem);
+    //console.log(householdMem);
   };
 
   const handleAuthMem = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setAuthMem({ ...authMem, [name]: value });
-    console.log(authMem);
+    //console.log(authMem);
   };
 
   useEffect(() => {
@@ -184,7 +184,7 @@ export default function AddNewClient() {
       .then((response) => response.json())
       .then((data) => {
         // log to console for testing purposes
-        console.log("client household: ", data);
+        console.log("client + household: ", data);
       })
       .catch((err) => console.log(err));
   };
@@ -201,7 +201,7 @@ export default function AddNewClient() {
       .then((response) => response.json())
       .then((data) => {
         // log to console for testing purposes
-        console.log("client auth: ", data);
+        console.log("client + auth: ", data);
       })
       .catch((err) => console.log(err));
   };
