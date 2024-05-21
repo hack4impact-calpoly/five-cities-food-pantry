@@ -184,13 +184,31 @@ export default function AddNewClient() {
       .then((response) => response.json())
       .then((data) => {
         // log to console for testing purposes
-        console.log("client posted: ", data);
+        console.log("client household: ", data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const updateClientAuth = (authMems: string[], clientId: string) => {
+    console.log(authMems);
+    fetch(`/api/clients/${clientId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ authorizedMem: authMems }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // log to console for testing purposes
+        console.log("client auth: ", data);
       })
       .catch((err) => console.log(err));
   };
 
   const postAuthMembers = (clientId: string) => {
     if (selectedValue) {
+      const authMemArr: string[] = [];
       authMem.client = clientId;
       fetch("/api/authorizedMembers", {
         method: "POST",
@@ -202,6 +220,9 @@ export default function AddNewClient() {
         .then((response) => response.json())
         .then((data) => {
           console.log("auth mem: ", data.message);
+          authMemArr.push(data.message);
+          //console.log(authMemArr);
+          updateClientAuth(authMemArr, clientId);
         })
         .catch((err) => console.log(err));
     }

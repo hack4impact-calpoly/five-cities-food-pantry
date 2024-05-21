@@ -66,13 +66,40 @@ export async function PUT(req: NextRequest, { params }: IParams) {
   const { userId } = params;
   try {
     const body = await req.json();
-    const { householdMem } = body;
 
-    const updatedClient = await IClientSchema.findByIdAndUpdate(
-      userId,
-      { householdMem },
-      { new: true }
-    );
+    const updateData: any = {};
+     // Dynamically add fields to updateData if they exist in the request body
+     if (body.householdMem) {
+      updateData.householdMem = body.householdMem;
+    }
+    if (body.authorizedMem) {
+      updateData.authorizedMem = body.authorizedMem;
+    }
+
+
+    //const { householdMem } = body;
+    let updatedClient;
+
+    if (updateData.householdMem) {
+      updatedClient = await IClientSchema.findByIdAndUpdate(
+        userId,
+        { householdMem: updateData.householdMem},
+        { new: true }
+      );
+    }
+    if (updateData.authorizedMem) {
+      updatedClient = await IClientSchema.findByIdAndUpdate(
+        userId,
+        { authMem: updateData.authorizedMem},
+        { new: true }
+      );
+    }
+
+    // const updatedClient = await IClientSchema.findByIdAndUpdate(
+    //   userId,
+    //   {},
+    //   { new: true }
+    // );
     
     if (!updatedClient) {
       return NextResponse.json({ error: "Client not found." }, { status: 404 });
@@ -87,3 +114,31 @@ export async function PUT(req: NextRequest, { params }: IParams) {
     );
   }
 }
+
+
+// export async function PUT(req: NextRequest, { params }: IParams) {
+//   await connectDB();
+//   const { userId } = params;
+//   try {
+//     const body = await req.json();
+//     const { householdMem } = body;
+
+//     const updatedClient = await IClientSchema.findByIdAndUpdate(
+//       userId,
+//       { householdMem },
+//       { new: true }
+//     );
+    
+//     if (!updatedClient) {
+//       return NextResponse.json({ error: "Client not found." }, { status: 404 });
+//     }
+
+//     return NextResponse.json(updatedClient, { status: 200 });
+//   } catch (err) {
+//     console.error("Error updating client:", err);
+//     return NextResponse.json(
+//       { error: "Error updating client." },
+//       { status: 500 }
+//     );
+//   }
+// }
