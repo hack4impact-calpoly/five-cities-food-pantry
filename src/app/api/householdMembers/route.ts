@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../database/db";
-import IClientSchema from "../../../database/clientSchema";
+import HouseholdMember from "../../../database/householdMemberSchema";
 
 export async function GET(req: NextRequest) {
   try {
@@ -8,10 +8,10 @@ export async function GET(req: NextRequest) {
     await connectDB();
 
     // Fetching clients
-    const clients = await IClientSchema.find();
+    const members = await HouseholdMember.find();
 
     // Checking if clients are found
-    if (clients.length === 0) {
+    if (members.length === 0) {
       return NextResponse.json(
         { message: "No clients found." },
         { status: 200 }
@@ -19,11 +19,11 @@ export async function GET(req: NextRequest) {
     }
 
     // Returning clients if found
-    return NextResponse.json(clients);
+    return NextResponse.json(members);
   } catch (err) {
-    console.error("Error fetching clients:", err);
+    console.error("Error fetching members:", err);
     return NextResponse.json(
-      { error: "Error fetching clients." },
+      { error: "Error fetching members." },
       { status: 500 }
     );
   }
@@ -33,23 +33,21 @@ export async function POST(req: NextRequest) {
   await connectDB();
 
   try {
-    const newClientData = await req.json();
+    const { members } = await req.json();
+    if (!Array.isArray(members)) {
+      return NextResponse.json(
+        { message: "Expected array of household members." },
+        { status: 400 }
+      );
+    }
 
-    //create a new client using the data in body
-    const newClient = new IClientSchema(newClientData);
-
-    //save the new client to the database
-    await newClient.save();
-
-    return NextResponse.json(
-      { message: newClient._id.valueOf() },
-      { status: 200 }
-    );
+    const result = await HouseholdMember.insertMany(members);
+    return NextResponse.json({ message: result }, { status: 200 });
   } catch (err) {
     //if unable to add client, return error
-    console.log("Error adding client:", err);
+    console.log("Error adding members:", err);
     return NextResponse.json(
-      { error: "Error adding client." },
+      { error: "Error adding members." },
       { status: 500 }
     );
   }

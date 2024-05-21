@@ -48,6 +48,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   await connectDB();
   const { userId } = params;
 
+
   try {
     //find the client to delete by the given id
     const client = await IClientSchema.findOne({ _id: userId });
@@ -65,3 +66,51 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
     );
   }
 }
+
+// update a client's household members 
+export async function PUT(req: NextRequest, { params }: IParams) {
+  await connectDB();
+  const { userId } = params;
+  try {
+    const body = await req.json();
+
+    const updateData: any = {};
+     // Dynamically add fields to updateData if they exist in the request body
+     if (body.householdMem) {
+      updateData.householdMem = body.householdMem;
+    }
+    if (body.authorizedMem) {
+      updateData.authorizedMem = body.authorizedMem;
+    }
+
+    let updatedClient;
+
+    if (updateData.householdMem) {
+      updatedClient = await IClientSchema.findByIdAndUpdate(
+        userId,
+        { householdMem: updateData.householdMem},
+        { new: true }
+      );
+    }
+    if (updateData.authorizedMem) {
+      updatedClient = await IClientSchema.findByIdAndUpdate(
+        userId,
+        { authMem: updateData.authorizedMem},
+        { new: true }
+      );
+    }
+
+    if (!updatedClient) {
+      return NextResponse.json({ error: "Client not found." }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedClient, { status: 200 });
+  } catch (err) {
+    console.error("Error updating client:", err);
+    return NextResponse.json(
+      { error: "Error updating client." },
+      { status: 500 }
+    );
+  }
+}
+
