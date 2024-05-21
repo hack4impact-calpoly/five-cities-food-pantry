@@ -5,7 +5,8 @@ import PageNumberNav from "./pageNumberNav";
 import { useState, useEffect } from "react";
 
 export type ClientInfo = {
-  headOfHousehold: string;
+  firstName: string;
+  lastName: string;
   phoneNumber: string;
   address: string;
   lastVisit: string;
@@ -34,7 +35,7 @@ const determineClientsIndices = (
   // * if records on page not exactly 11 (then extra records will need to be added), so call prepare clients
   if (clients.length < topRange) {
     return prepareClients(
-      clients.slice(bottomRange, clients.length - 1),
+      clients.slice(bottomRange, clients.length),
       recordsPerPage
     );
   }
@@ -52,10 +53,11 @@ const prepareClients = (
 ): ClientInfo[] => {
   // * invisible unicode characters included for styling purposes, otherwise, the border-right on each cell will not look correct
   const emptyClient: ClientInfo = {
-    headOfHousehold: "­",
+    firstName: "­",
+    lastName: "",
     phoneNumber: "­",
     address: "­",
-    lastVisit: "­",
+    lastVisit: "",
   };
 
   // * adds empty clients to the client side list so a full page of rows will always be generated
@@ -115,11 +117,6 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
   // * pageNumberNav component is included below the table to allow for switching of pages
   return (
     <div className={style.tableContainer}>
-      {errorMessage && (
-        <div className={style.errorMessage}>
-          Error: There are no clients associated with this user.
-        </div>
-      )}
       <div className={style.tableHeaderRow}>
         <p className={style.infoTitle}>Head of Household</p>
         <p className={style.infoTitle}>Phone Number</p>
@@ -129,12 +126,17 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
       {determineClientsIndices(clients, currentPage)?.map((client, index) => (
         <TableRow
           key={index} // It's better to use a unique ID here if available
-          headOfHousehold={client.headOfHousehold}
+          headOfHousehold={`${client.firstName} ${client.lastName}`}
           phoneNumber={client.phoneNumber}
           address={client.address}
-          lastVisit={client.lastVisit}
+          lastVisit={client.lastVisit} // need to fix and calculate
         />
       ))}
+      {errorMessage && (
+        <div className={style.errorMessage}>
+          Error: There are no clients associated with this user.
+        </div>
+      )}
       <PageNumberNav numPages={numPages} />
     </div>
   );

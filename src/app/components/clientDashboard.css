@@ -107,7 +107,7 @@ h3 {
   width: 35%;
 }
 
-button.check-in {
+.check-in {
   border: 1.5px solid rgb(103, 109, 78);
   color: rgb(103, 109, 78);
   border-radius: 3px;
@@ -115,6 +115,9 @@ button.check-in {
   font-size: 1.35em;
   height: 2.25em;
   background: #fff;
+}
+button.check-in:hover {
+  cursor: pointer;
 }
 
 .name-and-button {
@@ -164,4 +167,79 @@ button.check-in {
 
 .bolded {
   font-weight: 600;
+}
+
+.backgroundGreen {
+  background: rgb(103, 109, 78);
+  color: white;
+}
+
+.checkedInBanner {
+  position: relative;
+  top: -3.5em;
+  border: 1px solid rgb(103, 109, 78);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkedInBanner p {
+  color: rgb(103, 109, 78);
+  margin-top: 0.3em;
+}
+
+/* Dialog Styling */
+.dialog {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(128, 128, 128, 0.6);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.dialog-modal {
+  background: white;
+  width: 18em;
+  height: 10em;
+  border-radius: 8px;
+  padding: 1em;
+}
+
+h3.confirmMessage {
+  font-weight: 500;
+  font-size: 1.5em;
+  margin: 0;
+  margin: 0.25em 0;
+  padding: 0;
+}
+
+.dialogButton {
+  border: none;
+  padding: 0.75em;
+  border-radius: 5px;
+  color: white;
+}
+
+.checkOutUser {
+  background: rgb(103, 109, 78);
+  margin-right: 0.75em;
+}
+
+.cancelCheckOutUser {
+  border: 1px solid red;
+  background: none;
+  color: red;
+}
+
+.buttonsHolder {
+  margin-top: 1.25em;
 }

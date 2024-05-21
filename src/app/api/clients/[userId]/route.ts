@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../../database/db";
 import IClientSchema from "../../../../database/clientSchema";
 
+import HouseholdMember from "../../../../database/householdMemberSchema";
+
 type IParams = {
   params: {
     userId: string;
@@ -12,13 +14,17 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     // Establishing database connection
     await connectDB();
+    // ! This declaration fixes error of HouseholdMember Schema not found
+    var HouseholdMember = require("../../../../database/householdMemberSchema");
+    var AuthorizedMember = require("../../../../database/authorizedMemberSchema");
 
     //takes the userId from the URL path
     const { userId } = params;
 
     // Fetching single client using userId from params
-    const client = await IClientSchema.findOne({ _id: userId });
-    console.log("Client ID: ", userId, "\n", "Client Data: ", client);
+    const client: any  = await IClientSchema.findOne({ _id: userId })
+      .populate("householdMem")
+      .populate("authMem");
 
     // If the client is not found, return a 404 response
     if (!client) {
@@ -41,6 +47,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
 export async function DELETE(req: NextRequest, { params }: IParams) {
   await connectDB();
   const { userId } = params;
+
 
   try {
     //find the client to delete by the given id
@@ -76,8 +83,6 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       updateData.authorizedMem = body.authorizedMem;
     }
 
-
-    //const { householdMem } = body;
     let updatedClient;
 
     if (updateData.householdMem) {
@@ -95,12 +100,6 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    // const updatedClient = await IClientSchema.findByIdAndUpdate(
-    //   userId,
-    //   {},
-    //   { new: true }
-    // );
-    
     if (!updatedClient) {
       return NextResponse.json({ error: "Client not found." }, { status: 404 });
     }
@@ -115,30 +114,3 @@ export async function PUT(req: NextRequest, { params }: IParams) {
   }
 }
 
-
-// export async function PUT(req: NextRequest, { params }: IParams) {
-//   await connectDB();
-//   const { userId } = params;
-//   try {
-//     const body = await req.json();
-//     const { householdMem } = body;
-
-//     const updatedClient = await IClientSchema.findByIdAndUpdate(
-//       userId,
-//       { householdMem },
-//       { new: true }
-//     );
-    
-//     if (!updatedClient) {
-//       return NextResponse.json({ error: "Client not found." }, { status: 404 });
-//     }
-
-//     return NextResponse.json(updatedClient, { status: 200 });
-//   } catch (err) {
-//     console.error("Error updating client:", err);
-//     return NextResponse.json(
-//       { error: "Error updating client." },
-//       { status: 500 }
-//     );
-//   }
-// }

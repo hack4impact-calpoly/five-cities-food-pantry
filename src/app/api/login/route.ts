@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "../../../database/db";
 import IUserSchema from "../../../database/userSchema";
+import bcrypt from "bcrypt";
 
 // expected request body
 interface LoginRequestBody {
@@ -35,13 +36,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let passwordCorrect = null;
-    // ! THIS MUST BE REPLACED WITH PROPER PASSWORD AUTHENTICATION BEFORE DEPLOYMENT
-    if (password == user.password) {
-      passwordCorrect = true;
-    } else {
-      passwordCorrect = false;
-    }
+    const passwordCorrect = await bcrypt.compare(password, user.password)
 
     if (!passwordCorrect) {
       return NextResponse.json(
@@ -51,7 +46,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Returning user if found and authenticated
-    return NextResponse.json(user);
+    const { password: _, ...userWithoutPassword } = user.toObject(); // toObject() might be necessary depending on your schema setup
+    return NextResponse.json({ user: userWithoutPassword, message: "Login successful." });
   } catch (err) {
     console.error("Error fetching user:", err);
     return NextResponse.json(
