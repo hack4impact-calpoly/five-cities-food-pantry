@@ -2,6 +2,7 @@ import React from "react";
 import "./tableRow.css";
 
 type TableRowProps = {
+  clientId: string;
   headOfHousehold: string;
   phoneNumber: string;
   address: string;
@@ -11,6 +12,7 @@ type TableRowProps = {
 
 // * A single row that is rendered within the clientInformationTable component
 const TableRow: React.FC<TableRowProps> = ({
+  clientId,
   headOfHousehold,
   phoneNumber,
   address,
@@ -28,14 +30,14 @@ const TableRow: React.FC<TableRowProps> = ({
   return (
     <div className="tableRow">
       <div className="headOfHousehold" title="headOfHousehold">
-        <div className="nameWithIcon">
+      <a href={`/clientPage/${clientId}`} className="nameWithIcon">
           {headOfHousehold}
           {isFlagged && (
             <svg className='flagIcon'>
               <use href="/user-icons.svg#icon-warning"/>
             </svg>
           )}
-        </div>
+        </a>
       </div>
       <div className="phoneNumber" title="phoneNumber">
         {phoneNumber}

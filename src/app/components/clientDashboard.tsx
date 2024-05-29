@@ -282,7 +282,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
         </div>
       )}
       <div className="top-bar-button">
-        <button className="back-button">← Back</button>
+        <a href='/homePage' className="back-button">← Back</a>
         {client.isFlagged ? (
           <div className="flag-icon-container" onClick={handleFlagClick}>
             <svg className="flagIcon">

@@ -5,6 +5,7 @@ import PageNumberNav from "./pageNumberNav";
 import { useState, useEffect } from "react";
 
 export type ClientInfo = {
+  _id: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -55,6 +56,7 @@ const prepareClients = (
 ): ClientInfo[] => {
   // * invisible unicode characters included for styling purposes, otherwise, the border-right on each cell will not look correct
   const emptyClient: ClientInfo = {
+    _id: "",
     firstName: "­",
     lastName: "",
     phoneNumber: "­",
@@ -128,6 +130,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
       {determineClientsIndices(clients, currentPage)?.map((client, index) => (
         <TableRow
           key={index} // It's better to use a unique ID here if available
+          clientId={client._id}
           headOfHousehold={`${client.firstName} ${client.lastName}`}
           phoneNumber={client.phoneNumber}
           address={client.address}

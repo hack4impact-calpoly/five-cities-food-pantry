@@ -16,12 +16,17 @@ p {
   margin-bottom: 0.4em;
 }
 
-button.back-button {
+.back-button a {
   background: #fff;
   color: rgb(103, 109, 78);
   border: 0;
   font-size: 1.25em;
   margin-bottom: 1em;
+  text-decoration: none;
+}
+
+.back-button a:hover {
+  text-decoration: underline; 
 }
 
 .client-name {
