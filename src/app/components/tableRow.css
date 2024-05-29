@@ -32,3 +32,19 @@
   overflow: visible;
   white-space: normal;
 }
+
+.flagIcon {
+  fill: black; /* Default color */
+  width: 16px;
+  height: 16px;}
+
+.flagged {
+  fill: black; /* Change this to your preferred color */
+  stroke: black; /* Change this to your preferred color */
+}
+
+.nameWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Align name and icon to the opposite ends */
+}

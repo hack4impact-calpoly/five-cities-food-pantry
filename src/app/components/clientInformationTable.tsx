@@ -10,6 +10,8 @@ export type ClientInfo = {
   phoneNumber: string;
   address: string;
   lastVisit: string;
+  isFlagged: boolean;
+  flagNotes: string;
 };
 
 type ClientInformationTableProps = {
@@ -130,6 +132,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
           phoneNumber={client.phoneNumber}
           address={client.address}
           lastVisit={client.lastVisit} // need to fix and calculate
+          isFlagged={client.isFlagged}
         />
       ))}
       {errorMessage && (

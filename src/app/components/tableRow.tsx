@@ -6,6 +6,7 @@ type TableRowProps = {
   phoneNumber: string;
   address: string;
   lastVisit: string;
+  isFlagged: boolean;
 };
 
 // * A single row that is rendered within the clientInformationTable component
@@ -14,6 +15,7 @@ const TableRow: React.FC<TableRowProps> = ({
   phoneNumber,
   address,
   lastVisit,
+  isFlagged,
 }) => {
   // * These don't update the database but help with styling if these attributes are missing.
   if (!headOfHousehold) {
@@ -26,7 +28,14 @@ const TableRow: React.FC<TableRowProps> = ({
   return (
     <div className="tableRow">
       <div className="headOfHousehold" title="headOfHousehold">
-        {headOfHousehold}
+        <div className="nameWithIcon">
+          {headOfHousehold}
+          {isFlagged && (
+            <svg className='flagIcon'>
+              <use href="/user-icons.svg#icon-warning"/>
+            </svg>
+          )}
+        </div>
       </div>
       <div className="phoneNumber" title="phoneNumber">
         {phoneNumber}

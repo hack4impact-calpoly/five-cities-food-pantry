@@ -243,3 +243,100 @@ h3.confirmMessage {
 .buttonsHolder {
   margin-top: 1.25em;
 }
+
+/* Flag Styling */
+.flag {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(128, 128, 128, 0.6);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.flag-modal {
+  background: white;
+  width: 30em;
+  height: 22em;
+  border-radius:10px;
+  padding: 1em;
+}
+
+.flag-icon-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.flagIcon {
+  width: 64px;
+  height: 64px;
+  fill: black; /* Adjust the color as needed */
+}
+
+.flag-modal textarea {
+  width: 100%;
+  height: 115px;
+  padding-top: 10px;
+  padding-left: 5px;
+  border-radius: 15px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border color */
+  font-family: Arial, sans-serif; /* Font family */
+  font-size: 14px; /* Font size */
+  line-height: 1.5; /* Line height */
+  resize: none; /* Disable resizing */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Box shadow */
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.flag-modal textarea:focus {
+  border-color: #656d4a; /* Border color on focus */
+  outline: none; /* Remove default outline */
+}
+
+.flag-modal textarea::placeholder {
+  color: #aaa; /* Placeholder text color */
+  font-style: italic; /* Italic placeholder text */
+}
+
+.flaggingButton {
+  border: 1.5px solid red;
+  justify-content: flex-end;
+  border-radius: 3px;
+  color: red;
+  width: 8em;
+  font-size: 1.35em;
+  height: 2.25em;
+  background: #fff;
+}
+
+.flagButton {
+  border: none;
+  padding: 0.75em;
+  border-radius: 5px;
+  color: white;
+}
+
+.confirmFlag {
+  background: rgb(103, 109, 78);
+  margin-right: 0.75em;
+}
+
+.cancelFlag {
+  border: 1px solid red;
+  background: none;
+  color: red;
+}
+
+h3.confirmFlagMessage {
+  font-weight: 200;
+  font-size: 1.2em;
+  margin: 0;
+  margin: 0.25em 0;
+  padding: 0;
+}
