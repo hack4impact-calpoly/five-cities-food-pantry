@@ -1,27 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./pageNumberNav.css";
-import { useState } from "react";
 
 interface PageNumberNavProps {
   numPages: number;
+  parentCurrentPage: number;
 }
 
-const PageNumberNav: React.FC<PageNumberNavProps> = ({ numPages }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const PageNumberNav: React.FC<PageNumberNavProps> = ({
+  numPages,
+  parentCurrentPage,
+}) => {
+  const [currentPage, setCurrentPage] = useState(parentCurrentPage);
 
-  // * handles the currentPage state within this component and creates event to update the parent component
+  // * Syncs page state with with the parent component (clientInformationTable.tsx)
+  useEffect(() => {
+    setCurrentPage(parentCurrentPage);
+  }, [parentCurrentPage]);
+
+  // * if a page number is clicked within this component, update this components current page, send an update to the parent
   const pageNumberClicked = (pageNumber: number) => {
+    console.log(
+      "page number updated within pageNumberNav component: ",
+      pageNumber
+    );
     setCurrentPage(pageNumber);
 
     // * creates an event that bubbles up to clientInformationTable to change which range of records is shown (based on selected page)
     const event = new CustomEvent("PageNumberClicked", {
       detail: { pageNumber },
     });
-
     window.dispatchEvent(event);
   };
-  console.log("page number within PNN: ", numPages);
-  // * creates the navigation numbers/buttons at the botton of the clientInformationTable, will render as many as there are pages
+
+  // * creates the navigation numbers/buttons at the bottom of the clientInformationTable, will render as many as there are pages
   return (
     <div className="page-numbers-container">
       <ul className="numbers-list">

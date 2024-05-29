@@ -6,13 +6,13 @@ import { ClientInfo } from "../components/clientInformationTable";
 import { useState, useEffect } from "react";
 
 export default function HomePage() {
-  const [searchQuery, setSearchQuery] = useState(""); // * holds the current query
+  const [searchQuery, setSearchQuery] = useState(""); // holds the current query
   const [clientList, setClientList] = useState<ClientInfo[]>([]); // State to hold the list of clients
   const [errorMessage, setErrorMessage] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // * initially requests the client list information from the database
   useEffect(() => {
-    // * makes a GET request for all of the clients in the database
     const getClientDocumentsFromDatabase = async () => {
       try {
         const response = await fetch("/api/clients", {
@@ -37,28 +37,63 @@ export default function HomePage() {
     getClientDocumentsFromDatabase();
   }, []); // empty dependency array makes effect run once on mount
 
-  // * runs when user submits a search bar request
+  // * just prevents default event behavior, all search functionality is conducted when the searchQuery state is updated
   const handleSearch = (event: any) => {
     event.preventDefault();
-    setCurrentPage(1);
-    console.log("Searching for: ", searchQuery);
   };
 
-  const filteredClients = clientList.filter(client =>
-    client.firstName.toLowerCase().trim().includes(searchQuery.toLowerCase().trim()) ||
-    client.lastName.toLowerCase().trim().includes(searchQuery.toLowerCase().trim()) ||
-    client.phoneNumber.trim().includes(searchQuery.trim()) ||
-    client.address.toLowerCase().trim().includes(searchQuery.toLowerCase().trim())
-  );
+  // * updated to use .every so that the user can add all the user information into a search:
+  // * ex. "f_name l_name", even "f_name l_name phoneNumber", and the result will be returned correctly
+  // for each attribute of each client in clientList, if the attr. includes the searchQuery, append to filteredClients
+  const filteredClients = clientList.filter((client) => {
+    const terms = searchQuery.toLowerCase().trim().split(" ");
+    return terms.every(
+      (term) =>
+        `${client.firstName} ${client.lastName}`.toLowerCase().includes(term) ||
+        client.phoneNumber.includes(term) ||
+        client.address.toLowerCase().includes(term)
+    );
+  });
 
+  // add event listeners for the pageNumber update event from the clientInformationTable component (child)
+  // update the currentPage of this component to that of the clientInformationTable component
   useEffect(() => {
+    const handlePageNumberClick = (event: CustomEvent) => {
+      setCurrentPage(event.detail.newPageNumber);
+    };
+
+    // Add event listener for the custom event
+    window.addEventListener(
+      "SendPageNumberToMainPage",
+      handlePageNumberClick as EventListener
+    );
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener(
+        "SendPageNumberToMainPage",
+        handlePageNumberClick as EventListener
+      );
+    };
+  }, []); // Add an empty dependency array to run this effect only once
+
+  // triggered every time the searchQuery is updated (each keystroke)
+  useEffect(() => {
+    // if a search query exists but no clients found, then there is no match
     const isNoMatch = !!searchQuery && filteredClients.length === 0;
+
+    // sets search bar error message if no match is found
     setErrorMessage(isNoMatch);
-    if (searchQuery) setCurrentPage(1);
   }, [filteredClients, searchQuery]);
-  
-  // * home page main container holds the client search header, add new client button, and search bar,
-  // * information table is rendered by calling the clientInformationTable component
+
+  // * useful for debugging, but not necessary
+  // listens to updates to the currentPage state and logs the currentPage
+  useEffect(() => {
+    console.log("currentPage Updated within Page.tsx", currentPage);
+  }, [currentPage]);
+
+  // home page main container holds the client search header, add new client button, and search bar,
+  // information table is rendered by calling the clientInformationTable component
   return (
     <>
       <Navbar />
@@ -88,13 +123,17 @@ export default function HomePage() {
               </form>
               {errorMessage && (
                 <div className={style.errorMessage}>
-                  Error: There are no clients that fit the parameters of your search.
+                  Error: There are no clients that fit the parameters of your
+                  search.
                 </div>
               )}
             </div>
           </div>
         </div>
-        <ClientInformationTable clients={filteredClients} />
+        <ClientInformationTable
+          parentCurrentPage={currentPage}
+          clients={filteredClients}
+        />
       </div>
     </>
   );
