@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from "./clientInformationTable.module.css";
 import TableRow from "./tableRow";
 import PageNumberNav from "./pageNumberNav";
-import { useState, useEffect } from "react";
 
 export type ClientInfo = {
   _id: string;
@@ -17,6 +16,7 @@ export type ClientInfo = {
 
 type ClientInformationTableProps = {
   clients: ClientInfo[];
+  parentCurrentPage: number;
 };
 
 // * Returns a spliced version of the clientList according to the desired records per page, and currentPage set by the user
@@ -25,7 +25,7 @@ const determineClientsIndices = (
   currentPage: number
 ) => {
   // * if for some reason the data isn't an array or is empty (solves slice error for empty list as well)
-  if (!Array.isArray(clients) || clients.length == 0) {
+  if (!Array.isArray(clients) || clients.length === 0) {
     clients = [];
   }
 
@@ -33,7 +33,6 @@ const determineClientsIndices = (
   const recordsPerPage = 11;
   const bottomRange = (currentPage - 1) * recordsPerPage;
   const topRange = currentPage * recordsPerPage;
-  console.log("CLIENTS LIST WITHIN DETERMINE: ", clients);
 
   // * if records on page not exactly 11 (then extra records will need to be added), so call prepare clients
   if (clients.length < topRange) {
@@ -41,9 +40,8 @@ const determineClientsIndices = (
       clients.slice(bottomRange, clients.length),
       recordsPerPage
     );
-  }
-  // * if num records exact multiple, no extra records needed
-  else {
+  } else {
+    // * if num records exact multiple, no extra records needed
     return clients.slice(bottomRange, topRange);
   }
 };
@@ -82,24 +80,55 @@ const calcPages = (clients: ClientInfo[]): number => {
 
 const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
   clients,
+  parentCurrentPage,
 }) => {
   //* states defined within component or else error occurs
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(parentCurrentPage);
   const [errorMessage, setErrorMessage] = useState(false);
   const [numPages, setNumPages] = useState(0);
+  const [clientList, setClientList] = useState<ClientInfo[]>([]);
 
-  // * useEffect handles the event that bubbles up from the pageNav component as well as setting the error message state
+  // * Syncs page state with with the parent component (page.tsx)
   useEffect(() => {
-    const handlePageNumberClick = (event: CustomEvent) => {
-      setCurrentPage(event.detail.pageNumber);
-    };
+    setCurrentPage(parentCurrentPage);
+  }, [parentCurrentPage]);
 
-    // * updates the number of pages state
-    setNumPages(calcPages(clients));
+  // * Sync client state with parent component (page.tsx), and handles updating page #
+  useEffect(() => {
+    setClientList(clients);
 
-    // ! Is there a scenario where the error message is set to true, client list then becomes not empty, but error message isn't reset?
+    // * how many pages should be rendered based on (possibly new) # of clients
+    const totalNumPages = calcPages(clients);
+    setNumPages(totalNumPages);
+
+    // * if the current page is greater than the number of pages calculated, current Page should be set to the total number of pages
+    // * also check if clients.length is 0 to prevent this logic from running before the client list is retrieeved from the db
+    if (currentPage > totalNumPages && clients.length != 0) {
+      setCurrentPage(totalNumPages);
+      const newEvent = new CustomEvent("SendPageNumberToMainPage", {
+        detail: { newPageNumber: totalNumPages },
+      });
+      window.dispatchEvent(newEvent);
+    }
+
     setErrorMessage(clients.length === 0);
+  }, [clients]);
 
+  // * handles page number click event from pageNumberNav
+  const handlePageNumberClick = (event: CustomEvent) => {
+    const newPageNumber = event.detail.pageNumber;
+    setCurrentPage(newPageNumber);
+
+    // * creates an event that bubbles up to page.tsx to change which range of records is shown (based on selected page)
+    const newEvent = new CustomEvent("SendPageNumberToMainPage", {
+      detail: { newPageNumber },
+    });
+
+    window.dispatchEvent(newEvent);
+  };
+
+  // * add event listeners to listen for PageNumberClicked from pageNumberNav (child component)
+  useEffect(() => {
     // Add event listener for the custom event
     window.addEventListener(
       "PageNumberClicked",
@@ -113,7 +142,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
         handlePageNumberClick as EventListener
       );
     };
-  }, [clients]);
+  }, []);
 
   // * an error message is conditionally rendered if the initial client list is empty
   // * within tableHeaderRow: generates the titles for each column of table
@@ -143,7 +172,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
           Error: There are no clients associated with this user.
         </div>
       )}
-      <PageNumberNav numPages={numPages} />
+      <PageNumberNav parentCurrentPage={currentPage} numPages={numPages} />
     </div>
   );
 };
