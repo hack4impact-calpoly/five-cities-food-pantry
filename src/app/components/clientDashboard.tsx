@@ -269,7 +269,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
                 className="flagButton confirmFlag"
                 onClick={handleFlagConfirm}
               >
-                Confirm
+              {client.isFlagged ? 'Unflag Client' : 'Flag Client'}
               </button>
               <button
                 className="flagButton cancelFlag"
@@ -283,6 +283,16 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
       )}
       <div className="top-bar-button">
         <a href='/homePage' className="back-button">← Back</a>
+        {/* <div className="flag-icon-container" onClick={handleFlagClick}>
+          <svg className="flagIcon">
+            <use href="/user-icons.svg#icon-warning" />
+          </svg>
+        </div> */}
+        {/* {!client.isFlagged && (
+          <button className="flagButton" onClick={handleFlagClick}>
+            Flag Client?
+          </button>
+        )} */}
         {client.isFlagged ? (
           <div className="flag-icon-container" onClick={handleFlagClick}>
             <svg className="flagIcon">
@@ -292,7 +302,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
         ) : (
           <div className="flag-icon-container">
           <button onClick={handleFlagClick} className="flaggingButton">
-            Flag Client?
+            Flag Client
           </button>
           </div>
         )}
