@@ -2,6 +2,20 @@
 
 Here are all of the steps you should follow whenever contributing to this repo!
 
+## Environment Variables
+- `NEXT_PUBLIC_API_URL`:
+- `MONGO_URI`:
+- `AWS_ACCESS_KEY_ID`:
+- `AWS_SECRET_ACCESS_KEY`:
+
+## Setup and Deployment
+### Local Development
+1. Install all required packages: `npm i`
+2. Add all of the required environment variables into `.env`
+3. To run the project, run this command: `npm run dev`
+
+### Deployment Process
+
 ## Making Changes
 
 1. Before you start making changes, always make sure you're on the main branch, then `git pull` and `npm i` to make sure your code is up to date
@@ -28,3 +42,16 @@ When interacting with Git/GitHub, feel free to use the command line, VSCode exte
 4. Link your PR to the corresponding **Issue**
 5. Request a reviewer to check your code
 6. Once approved, your code is ready to be merged in 🎉
+
+## Known Issues and Limitations
+
+## Future Improvements
+
+## Contact Information
+
+Tech Lead: Hope Yim (hopieyimmie@gmail.com, 360-787-1445)
+
+Nonprofit: Angela Dalebout (daleboutk@mac.com, 714-308-3603)
+
+
+
