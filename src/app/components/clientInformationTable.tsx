@@ -4,11 +4,14 @@ import TableRow from "./tableRow";
 import PageNumberNav from "./pageNumberNav";
 
 export type ClientInfo = {
+  _id: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
   address: string;
   lastVisit: string;
+  isFlagged: boolean;
+  flagNotes: string;
 };
 
 type ClientInformationTableProps = {
@@ -51,6 +54,7 @@ const prepareClients = (
 ): ClientInfo[] => {
   // * invisible unicode characters included for styling purposes, otherwise, the border-right on each cell will not look correct
   const emptyClient: ClientInfo = {
+    _id: "",
     firstName: "­",
     lastName: "",
     phoneNumber: "­",
@@ -152,17 +156,17 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
         <p className={style.infoTitle}>Address</p>
         <p className={style.infoTitle}>Last Visit</p>
       </div>
-      {determineClientsIndices(clientList, currentPage)?.map(
-        (client, index) => (
-          <TableRow
-            key={index} // It's better to use a unique ID here if available
-            headOfHousehold={`${client.firstName} ${client.lastName}`}
-            phoneNumber={client.phoneNumber}
-            address={client.address}
-            lastVisit={client.lastVisit} // need to fix and calculate
-          />
-        )
-      )}
+      {determineClientsIndices(clients, currentPage)?.map((client, index) => (
+        <TableRow
+          key={index} // It's better to use a unique ID here if available
+          clientId={client._id}
+          headOfHousehold={`${client.firstName} ${client.lastName}`}
+          phoneNumber={client.phoneNumber}
+          address={client.address}
+          lastVisit={client.lastVisit} // need to fix and calculate
+          isFlagged={client.isFlagged}
+        />
+      ))}
       {errorMessage && (
         <div className={style.errorMessage}>
           Error: There are no clients associated with this user.

@@ -13,6 +13,7 @@ export interface iClient extends Document {
   notes: [];
   isFlagged: boolean;
   isCheckedOff: boolean;
+  flagNotes: string;
 }
 
 /**
@@ -120,7 +121,22 @@ const ClientSchema = new Schema<iClient>({
     type: Boolean,
     required: true,
   },
-  // family_unit: TBA
+  flagNotes: {
+    type: String,
+    required: function() {
+      return this.isFlagged;
+    },
+  },
+  // flagNotes: {
+  //   type: String,
+  //   validate: {
+  //     validator: function (this: iClient, v: string) {
+  //       // if the client is flagged, flagNotes must be required
+  //       return !this.isFlagged || (this.isFlagged && v && v.length > 0);
+  //     },
+  //     message: "Flag notes are required when the client is flagged.",
+  //   },
+  // }
 });
 
 export default mongoose.models.Client ||

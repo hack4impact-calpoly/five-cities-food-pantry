@@ -20,6 +20,16 @@
   border-right: 1px solid #656d4a;
 }
 
+.headOfHousehold a {
+  color: black; 
+  text-decoration: none;
+}
+
+.headOfHousehold a:hover {
+  text-decoration: underline; 
+}
+
+
 /* if any of the data cells have an input that is too long, truncate the information accordingly and add an ellipsis*/
 .tableRow div {
   white-space: nowrap;
@@ -31,4 +41,20 @@
 .tableRow div:hover {
   overflow: visible;
   white-space: normal;
+}
+
+.flagIcon {
+  fill: black; /* Default color */
+  width: 16px;
+  height: 16px;}
+
+.flagged {
+  fill: black; /* Change this to your preferred color */
+  stroke: black; /* Change this to your preferred color */
+}
+
+.nameWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Align name and icon to the opposite ends */
 }

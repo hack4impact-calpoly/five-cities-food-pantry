@@ -43,6 +43,9 @@ function formatDateString(dateStr: string): string {
 const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
   const [checkedInState, setCheckedInState] = useState(client.isCheckedOff);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isFlaggedOpen, setIsFlaggedOpen] = useState(false);
+  const [flagNotes, setFlagNotes] = useState(client.flagNotes || '');
+
 
   // Update the checkedInState when the component mounts
   useEffect(() => {
@@ -169,6 +172,50 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
     setIsDialogOpen(false);
   };
 
+  const handleFlagClick = () => {
+    setIsFlaggedOpen(true);
+  };
+
+  const handleFlagConfirm = async () => {
+    const isSuccess = await updateClientFlagStateInDatabase(true, flagNotes);
+    if (isSuccess) {
+      setIsFlaggedOpen(false);
+      window.location.reload(); // Refresh to show the updated flag status
+    }
+  };
+
+  const handleFlagCancel = () => {
+    console.log("flag cancelled, box is closed");
+    setIsFlaggedOpen(false);
+  };
+
+  const updateClientFlagStateInDatabase = async (
+    clientState: boolean,
+    flagNotes: string
+  ): Promise<boolean> => {
+    try {
+      const response = await fetch(`/api/clients/flag/${client._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isFlagged: clientState, flagNotes }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setFlagNotes(clientState);
+        return true; // Indicate success
+      } else {
+        console.error("Flag update failed:", response.statusText);
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      return false; // Indicate failure
+    }
+  };
+
   return (
     <div className="client-profile">
       {checkedInState && (
@@ -204,8 +251,51 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
           </div>
         </div>
       )}
+      {isFlaggedOpen && (
+        <div className="flag">
+          <div className="flag-modal">
+            <h2 className="client-name">
+              {`${client.firstName} ${client.lastName}`}
+            </h2>
+            <h3 className="confirmFlagMessage">Reason for Flagging</h3>
+            <textarea
+              value={flagNotes}
+              onChange={(e) => setFlagNotes(e.target.value)}
+              placeholder="Enter flag notes"
+              required
+            />
+            <div className="buttonsHolder">
+              <button
+                className="flagButton confirmFlag"
+                onClick={handleFlagConfirm}
+              >
+                Confirm
+              </button>
+              <button
+                className="flagButton cancelFlag"
+                onClick={handleFlagCancel}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="top-bar-button">
-        <button className="back-button">← Back</button>
+        <a href='/homePage' className="back-button">← Back</a>
+        {client.isFlagged ? (
+          <div className="flag-icon-container" onClick={handleFlagClick}>
+            <svg className="flagIcon">
+              <use href="/user-icons.svg#icon-warning" />
+            </svg>
+          </div>
+        ) : (
+          <div className="flag-icon-container">
+          <button onClick={handleFlagClick} className="flaggingButton">
+            Flag Client?
+          </button>
+          </div>
+        )}
       </div>
       <div className="client-info">
         {/* Top Bar Holds the Client Name and Check In Button. */}
@@ -298,7 +388,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
             </div>
           </div>
           {client.authMem ? (
-            client.authMem.map((member, index) => (
+            client.authMem.map((member: any, index: any) => (
               <div key={index} className="table-row">
                 <div className="members">
                   <p className="details-content">
@@ -332,7 +422,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
           <div className="client-history">
             <h3 className="history-header">Last Visit Date(s)</h3>
             <div className="history-content">
-              {client.entryDates.map((date, index) => (
+              {client.entryDates.map((date: any, index: any) => (
                 <p key={index} className="visit-date">
                   {formatDateString(date)}
                 </p>
@@ -342,7 +432,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ client }) => {
           <div className="client-notes">
             <h3 className="notes-header">Notes</h3>
             <ul className="notes-content">
-              {client.notes.map((note, index) => (
+              {client.notes.map((note: any, index: any) => (
                 <li key={index}>
                   <p className="note">{note}</p>
                 </li>
