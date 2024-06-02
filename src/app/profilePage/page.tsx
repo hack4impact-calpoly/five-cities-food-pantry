@@ -7,7 +7,9 @@ export default function ProfilePage() {
         <div className={style.profilePage}>
         <div className={style.icons}>
         <svg><use href="/user-icons.svg#icon-user-profile" /></svg>
-        <svg width="100x" height="50px"><use href="/user-icons.svg#icon-pencil"/></svg>
+        <div className={style.editButton}>
+        <svg width="80px" height="40px"><use href="/user-icons.svg#icon-pencil"/></svg>
+        </div>
         </div>
         <div className={style.userInfo}>
         <div className={style.nameInfo}>

@@ -9,16 +9,18 @@
 
 .icons {
     display: flex;
-    gap: 600px;
+    gap: 410px;
 }
 
 .userInfo {
     padding: 20px;
+    resize: none;
+    max-width: 750px;
 }
 
 .nameInfo {
     display: flex;
-    gap:400px;
+    gap:100px;
 }
 
 .nameItem{
@@ -40,4 +42,13 @@
     padding-left: 50px;
     padding-right: 50px;
     margin-top: 20px;
+}
+
+.logout:hover {
+    background-color: rgb(94, 161, 94);
+    color: white;
+}
+
+.editButton {
+    padding-top: 110px;
 }

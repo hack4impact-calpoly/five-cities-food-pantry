@@ -21,7 +21,7 @@ const Navbar = () => {
           </a>
           <div className="profile-icon">
             <svg className="icon">
-              <use href="/user-icons.svg#icon-user-profile" />
+              <a href="/profilePage" className="navbar-link"><use href="/user-icons.svg#icon-user-profile" /></a>
             </svg>
           </div>
         </div>
