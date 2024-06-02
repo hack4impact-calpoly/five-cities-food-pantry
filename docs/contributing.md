@@ -3,8 +3,8 @@
 Here are all of the steps you should follow whenever contributing to this repo!
 
 ## Environment Variables
-- `NEXT_PUBLIC_API_URL`:
-- `MONGO_URI`:
+- `NEXT_PUBLIC_API_URL`: http://localhost:3000/api/example
+- `MONGO_URI`: MONGO_URI=mongodb+srv://username:password@cluster0.sqkzahu.mongodb.net/ccwfp?retryWrites=true&w=majority    
 - `AWS_ACCESS_KEY_ID`:
 - `AWS_SECRET_ACCESS_KEY`:
 
@@ -15,6 +15,7 @@ Here are all of the steps you should follow whenever contributing to this repo!
 3. To run the project, run this command: `npm run dev`
 
 ### Deployment Process
+- For the team developing in 2023-2024, we were not able to deploy yet but ask about deployment steps from the directors of engineering of H4I. Vercel and AWS is necessary.
 
 ## Making Changes
 
@@ -44,8 +45,20 @@ When interacting with Git/GitHub, feel free to use the command line, VSCode exte
 6. Once approved, your code is ready to be merged in 🎉
 
 ## Known Issues and Limitations
+- When reviewing PR's, sometimes code features work on a developer's end and not another's so make sure the URL string for the `.env` matches and is correct
+- Add a New Client
+  - Write later
+- Profile Page
+  - Authentication is tricky since we are only using MongoDB credentials in the database
+  - Write more later
 
 ## Future Improvements
+- Generate Report Page
+  - The nonprofit needs to generate a report for themselves and the county for the number of clients who showed up at the food pantry
+  - See the Figma for the design and the current implementation
+- Edit and Delete an Existing Client
+  - The pencil icon will show a modal popup that allows the employee/user to edit the client's information or even delete them
+  - See the Figma for the design
 
 ## Contact Information
 
