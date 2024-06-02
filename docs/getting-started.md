@@ -23,6 +23,9 @@ Welcome to the getting started page! Here is all you need to know to get this re
    2. Search "formatter" and set your default formatter to Prettier
    3. Search "format on save" and click the checkbox
 6. Familiarize yourself with [Helpful Commands](#helpful-commands), the [Project Structure](#project-structure), and the [steps for contributing](./contributing.md).
+7. Here is the setup for MongoDB: https://docs.google.com/document/d/1Mm5qPrhTA3cCc3BH77-dNnEyhtKapYgfRzpPbtbzuvI/edit?usp=sharing
+**8. Here is also all meeting notes and documentation for this project: https://drive.google.com/drive/folders/1LqH1-ucbstLpjTwIK2JQkxmIUfA4Ghim?usp=sharing
+**
 
 ## Setup for Tech Leads
 
@@ -37,7 +40,9 @@ Welcome to the getting started page! Here is all you need to know to get this re
    6. Create  
       <img src="./images/require-code-review.png" alt="Require Code Review" width="500"/>
 4. See [template-features.md](./template-features.md) for features included in this template repository.
-
+5. Here is the setup for MongoDB: https://docs.google.com/document/d/1Mm5qPrhTA3cCc3BH77-dNnEyhtKapYgfRzpPbtbzuvI/edit?usp=sharing
+**6. Here is also all meeting notes and documentation for this project: https://drive.google.com/drive/folders/1LqH1-ucbstLpjTwIK2JQkxmIUfA4Ghim?usp=sharing
+**
 ## Helpful commands
 
 - `npm run dev`: Start your local development environment at [http://localhost:3000](http://localhost:3000)
@@ -46,6 +51,9 @@ Welcome to the getting started page! Here is all you need to know to get this re
 - `git stash`: Temporarily remove all local changes to a branch and save them. Good when you need to hop to another branch without committing your current code.
 - `git stash apply`: Reapply most recent git stash.
 - `git merge orgin/master`: Pull all changes from the main branch to yours, good for resolving merge conflicts.
+
+## Diagrams / Designs
+- **Figma Link:** https://www.figma.com/design/HzCe6vgiSWkTgUFL3iKF4y/Wireframe?node-id=0%3A1&t=2qHuL9jpPIQlrRQ6-1
 
 ## Project Structure
 
@@ -61,6 +69,30 @@ Welcome to the getting started page! Here is all you need to know to get this re
   - [**database**](/src/database) MongoDB schemas and related files
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Key Features and Functionality
+- **Features**
+  - Signup and login flow
+  - A table view of all clients in the database and able to search by name, address, or number
+  - Being able to see an individual client and their household members
+  - Flag feature for employees/users to see who to be wary when they come to the food pantry
+  - Check in and check out feature for employees/users to record the client
+  - Add new client for new clients who come to the food pantry
+ - **Endpoints**
+   - Clients (by ID)
+      - **GET**: to get an individual client
+      - **DELETE**: to delete a client by ID
+   - Check in (by ID)
+      - **PUT**: to change and update a client's boolean value 'isCheckedOff' to true or false
+   - Flag Client (by ID)
+      - **PUT**: to change and update a client's boolean value 'isFlagged' to true or false and their 'flagNotes'
+   - All Clients
+      - **GET**: to get all clients from database
+      - **POST**: to add a new client
+    
+## Services Used
+- **Next.js**: We used Next.js in order to lessen the overhead of deploying a separate back-end, it provided tooling that would’ve otherwise had been installed seperately, such as built-in routing, serverless functions, middleware, etc.
+- **MongoDB**
 
 ## Learn More about Next.js
 
