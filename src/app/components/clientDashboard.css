@@ -16,17 +16,17 @@ p {
   margin-bottom: 0.4em;
 }
 
-.back-button a {
+.back-button {
   background: #fff;
   color: rgb(103, 109, 78);
   border: 0;
-  font-size: 1.25em;
+  font-size: 1.15em;
   margin-bottom: 1em;
   text-decoration: none;
 }
 
-.back-button a:hover {
-  text-decoration: underline; 
+.back-button:hover {
+  text-decoration: underline;
 }
 
 .client-name {
@@ -249,6 +249,10 @@ h3.confirmMessage {
   margin-top: 1.25em;
 }
 
+.buttonsHolder button:hover {
+  cursor: pointer;
+}
+
 /* Flag Styling */
 .flag {
   position: absolute;
@@ -268,7 +272,7 @@ h3.confirmMessage {
   background: white;
   width: 30em;
   height: 22em;
-  border-radius:10px;
+  border-radius: 10px;
   padding: 1em;
 }
 
@@ -282,6 +286,10 @@ h3.confirmMessage {
   width: 64px;
   height: 64px;
   fill: black; /* Adjust the color as needed */
+}
+
+.flagIcon:hover {
+  cursor: pointer;
 }
 
 .flag-modal textarea {
