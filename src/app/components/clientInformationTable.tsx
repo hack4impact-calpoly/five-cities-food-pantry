@@ -9,7 +9,7 @@ export type ClientInfo = {
   lastName: string;
   phoneNumber: string;
   address: string;
-  lastVisit: string;
+  entryDates: Date[];
   isFlagged: boolean;
   flagNotes: string;
 };
@@ -59,7 +59,7 @@ const prepareClients = (
     lastName: "",
     phoneNumber: "­",
     address: "­",
-    lastVisit: "",
+    entryDates: [],
   };
 
   // * adds empty clients to the client side list so a full page of rows will always be generated
@@ -163,7 +163,7 @@ const ClientInformationTable: React.FC<ClientInformationTableProps> = ({
           headOfHousehold={`${client.firstName} ${client.lastName}`}
           phoneNumber={client.phoneNumber}
           address={client.address}
-          lastVisit={client.lastVisit} // need to fix and calculate
+          entryDates={client.entryDates} // need to fix and calculate
           isFlagged={client.isFlagged}
         />
       ))}

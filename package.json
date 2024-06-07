@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "date-fns": "^3.6.0",
     "mongodb": "^6.6.0",
     "mongoose": "^7.6.3",
     "next": "^14.0.0",
