@@ -25,9 +25,9 @@ p {
   text-decoration: none;
 }
 
-.back-button a:hover {
+/* .back-button a:hover {
   text-decoration: underline; 
-}
+} */
 
 .client-name {
   font-size: 2rem;
